@@ -259,7 +259,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MiTagger";
-            this.Text = "MiTagger";
+            this.Text = "MiTagger 1.01";
             this.Load += new System.EventHandler(this.MiTagger_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
