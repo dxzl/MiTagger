@@ -59,18 +59,18 @@
             this.LabelPath.AutoSize = true;
             this.LabelPath.Location = new System.Drawing.Point(-1, 266);
             this.LabelPath.Name = "LabelPath";
-            this.LabelPath.Size = new System.Drawing.Size(29, 13);
+            this.LabelPath.Size = new System.Drawing.Size(32, 13);
             this.LabelPath.TabIndex = 1;
-            this.LabelPath.Text = "Path";
+            this.LabelPath.Text = "Path:";
             // 
             // LabelCredit
             // 
             this.LabelCredit.AutoSize = true;
             this.LabelCredit.Location = new System.Drawing.Point(-1, 288);
             this.LabelCredit.Name = "LabelCredit";
-            this.LabelCredit.Size = new System.Drawing.Size(34, 13);
+            this.LabelCredit.Size = new System.Drawing.Size(37, 13);
             this.LabelCredit.TabIndex = 2;
-            this.LabelCredit.Text = "Credit";
+            this.LabelCredit.Text = "Credit:";
             // 
             // groupBox1
             // 
@@ -257,10 +257,15 @@
             this.Controls.Add(this.LabelCredit);
             this.Controls.Add(this.LabelPath);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MiTagger";
-            this.Text = "MiTagger 1.01";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "MiTagger 1.03";
             this.Load += new System.EventHandler(this.MiTagger_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

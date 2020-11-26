@@ -422,7 +422,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.0.1.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.0.3.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_E1310CF5F78146E2B05B3F40F4EB68AC"
@@ -516,15 +516,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MiTagger"
-        "ProductCode" = "8:{5ACBD966-83C5-4B3C-9A65-22F20428A3F0}"
-        "PackageCode" = "8:{1F352CAF-0E83-4D7C-B6F5-8213073B3F48}"
+        "ProductCode" = "8:{780DC35E-0E0E-4DFE-A548-9BD0C9799CAF}"
+        "PackageCode" = "8:{54089897-AEB0-49B3-921C-504DC66BD4E5}"
         "UpgradeCode" = "8:{57D7F139-6D7B-43FB-B6C3-4BFC24404154}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.01"
+        "ProductVersion" = "8:1.03"
         "Manufacturer" = "8:Discrete-Time Systems"
         "ARPHELPTELEPHONE" = "8:dxzl@live.com"
         "ARPHELPLINK" = "8:"

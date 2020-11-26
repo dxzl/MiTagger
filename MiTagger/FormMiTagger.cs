@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,16 +19,64 @@ namespace MiTagger
         SongInfo si = null;
         string m_filePath = "";
 
+        //---------------------------------------------------------------------------
         public MiTagger()
         {
             InitializeComponent();
         }
-
+        //---------------------------------------------------------------------------
         private void MiTagger_Load(object sender, EventArgs e)
         {
-            LabelCredit.Text = "Credits: Thanks to the taglib-sharp coding team and Tim Sneith's MediaCatalog project.";
-        }
+            this.AllowDrop = true;
+            int[] arr = {60, 90};
+            SetListBoxTabs(ListBoxInfo, arr);
 
+            LabelCredit.Text = "Credits: Thanks to the taglib-sharp coding team and Tim Sneith's MediaCatalog project.";
+
+            string[] arguments = Environment.GetCommandLineArgs();
+            // NOTE: arguement[0] has the exe file name
+            if (arguments.Length == 2)
+            {
+                if (System.IO.File.Exists(arguments[1]))
+                    DoTags(arguments[1]);
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void MiTagger_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        //---------------------------------------------------------------------------
+        private void MiTagger_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            int len = FileList.Length;
+            if (len > 0)
+            {
+                if (len > 1 && len < 20)
+                {
+                    while (--len != 0)
+                      SpawnOurself(FileList[len]);
+                }
+                DoTags(FileList[0]);
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void SpawnOurself(String filePath)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.CreateNoWindow = false;
+            startInfo.UseShellExecute = false;
+            startInfo.FileName = Application.ExecutablePath;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.Arguments = "\"" + filePath + "\"";
+            try { Process.Start(startInfo); }
+            catch {}
+        }
+        //---------------------------------------------------------------------------
         private void ButtonSaveChanges_Click(object sender, EventArgs e)
         {
             try
@@ -87,7 +136,7 @@ namespace MiTagger
                 MessageBox.Show("Unable to write tags to: \"" + m_filePath + "\"");
             }
         }
-
+        //---------------------------------------------------------------------------
         private string GetFileType(int fileType)
         {
             switch (fileType) {
@@ -99,41 +148,60 @@ namespace MiTagger
                     return "unknown";
             };
         }
-
+        //---------------------------------------------------------------------------
         private void fIleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    DoTags(openFileDialog.FileName);
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void DoTags(String filePath)
+        {
+            using (var tagReader = new MediaTags.MediaTags())
+            {
+                m_filePath = filePath;
+                if ((si = tagReader.Read(m_filePath)) != null)
                 {
-                    using (var tagReader = new MediaTags.MediaTags())
-                    {
-                        m_filePath = openFileDialog.FileName;
-                        if ((si = tagReader.Read(m_filePath)) != null)
-                        {
-                            EditTitle.Text = StripTab(si.Title);
-                            EditAlbum.Text = StripTab(si.Album);
-                            EditArtist.Text = StripTab(si.Artist);
-                            EditGenre.Text = StripTab(si.Genre);
-                            EditYear.Text = StripTab(si.Year);
-                            EditTrack.Text = StripTab(si.Track);
-                            LabelPath.Text = m_filePath;
-                            ListBoxInfo.Items.Clear();
-                            if (si.BitRate >= 0)
-                                ListBoxInfo.Items.Add("Bit rate:\t\t" + si.BitRate);
-                            if (si.SampleRate >= 0)
-                                ListBoxInfo.Items.Add("Sample rate:\t\t" + si.SampleRate);
-                            if (si.Channels >= 0)
-                                ListBoxInfo.Items.Add("Channels:\t\t " + si.Channels);
-                            if (si.FileType >= 0)
-                                ListBoxInfo.Items.Add("File type:\t\t" + GetFileType(si.FileType));
-                            if (si.FileSize >= 0)
-                                ListBoxInfo.Items.Add("File size:\t\t" + si.FileSize);
-                            if (si.Duration != null)
-                                ListBoxInfo.Items.Add("Duration:\t\t" + si.Duration);
-                        }
-                    }
+                    EditTitle.Text = StripTab(si.Title);
+                    EditAlbum.Text = StripTab(si.Album);
+                    EditArtist.Text = StripTab(si.Artist);
+                    EditGenre.Text = StripTab(si.Genre);
+                    EditYear.Text = StripTab(si.Year);
+                    EditTrack.Text = StripTab(si.Track);
+                    LabelPath.Text = m_filePath;
+                    ListBoxInfo.Items.Clear();
+                    if (si.BitRate >= 0)
+                        ListBoxInfo.Items.Add("Bit rate:\t" + si.BitRate);
+                    if (si.SampleRate >= 0)
+                      ListBoxInfo.Items.Add("Sample rate:\t" + si.SampleRate);
+                    if (si.Channels >= 0)
+                        ListBoxInfo.Items.Add("Channels:\t " + si.Channels);
+                    if (si.FileType >= 0)
+                        ListBoxInfo.Items.Add("File type:\t" + GetFileType(si.FileType));
+                    if (si.FileSize >= 0)
+                        ListBoxInfo.Items.Add("File size:\t" + si.FileSize);
+                    if (si.Duration != null)
+                        ListBoxInfo.Items.Add("Duration:\t" + si.Duration);
                 }
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void SetListBoxTabs(ListBox lst, IEnumerable<int> tabs)
+        {
+            // Make sure the control will use them.
+            lst.UseTabStops = true;
+            lst.UseCustomTabOffsets = true;
+
+            // Get the control's tab offset collection.
+            ListBox.IntegerCollection offsets = lst.CustomTabOffsets;
+
+            // Define the tabs.
+            foreach (int tab in tabs)
+            {
+                offsets.Add(tab);
             }
         }
         //---------------------------------------------------------------------------
@@ -215,7 +283,6 @@ namespace MiTagger
             }
             return 0;
         }
-
         //---------------------------------------------------------------------------
         // strips quotes (actually the tab character!) from quoted string
         // (NOTE: allow for string having extraneous leading/trailing blanks)
