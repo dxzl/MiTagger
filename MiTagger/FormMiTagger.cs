@@ -165,26 +165,31 @@ namespace MiTagger
                 m_filePath = filePath;
                 if ((si = tagReader.Read(m_filePath)) != null)
                 {
-                    EditTitle.Text = StripTab(si.Title);
-                    EditAlbum.Text = StripTab(si.Album);
-                    EditArtist.Text = StripTab(si.Artist);
-                    EditGenre.Text = StripTab(si.Genre);
-                    EditYear.Text = StripTab(si.Year);
-                    EditTrack.Text = StripTab(si.Track);
-                    LabelPath.Text = m_filePath;
-                    ListBoxInfo.Items.Clear();
-                    if (si.BitRate >= 0)
-                        ListBoxInfo.Items.Add("Bit rate:\t" + si.BitRate);
-                    if (si.SampleRate >= 0)
-                      ListBoxInfo.Items.Add("Sample rate:\t" + si.SampleRate);
-                    if (si.Channels >= 0)
-                        ListBoxInfo.Items.Add("Channels:\t " + si.Channels);
-                    if (si.FileType >= 0)
-                        ListBoxInfo.Items.Add("File type:\t" + GetFileType(si.FileType));
-                    if (si.FileSize >= 0)
-                        ListBoxInfo.Items.Add("File size:\t" + si.FileSize);
-                    if (si.Duration != null)
-                        ListBoxInfo.Items.Add("Duration:\t" + si.Duration);
+                    if (si.bException)
+                      MessageBox.Show("Read fault... please retry!");
+                    else
+                    {
+                      EditTitle.Text = StripTab(si.Title);
+                      EditAlbum.Text = StripTab(si.Album);
+                      EditArtist.Text = StripTab(si.Artist);
+                      EditGenre.Text = StripTab(si.Genre);
+                      EditYear.Text = StripTab(si.Year);
+                      EditTrack.Text = StripTab(si.Track);
+                      LabelPath.Text = m_filePath;
+                      ListBoxInfo.Items.Clear();
+                      if (si.BitRate >= 0)
+                          ListBoxInfo.Items.Add("Bit rate:\t" + si.BitRate);
+                      if (si.SampleRate >= 0)
+                        ListBoxInfo.Items.Add("Sample rate:\t" + si.SampleRate);
+                      if (si.Channels >= 0)
+                          ListBoxInfo.Items.Add("Channels:\t " + si.Channels);
+                      if (si.FileType >= 0)
+                          ListBoxInfo.Items.Add("File type:\t" + GetFileType(si.FileType));
+                      if (si.FileSize >= 0)
+                          ListBoxInfo.Items.Add("File size:\t" + si.FileSize);
+                      if (si.Duration != null)
+                          ListBoxInfo.Items.Add("Duration:\t" + si.Duration);
+                    }
                 }
             }
         }

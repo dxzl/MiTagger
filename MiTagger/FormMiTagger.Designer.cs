@@ -50,6 +50,7 @@
             this.ListBoxInfo = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +75,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ButtonPasteTags);
             this.groupBox1.Controls.Add(this.ButtonCopyTags);
             this.groupBox1.Controls.Add(this.ButtonSaveChanges);
@@ -247,6 +249,15 @@
             this.fIleToolStripMenuItem.Text = "&File";
             this.fIleToolStripMenuItem.Click += new System.EventHandler(this.fIleToolStripMenuItem_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 211);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(370, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "*Tip: You can drag-drop multiple song files onto MiTagger to open all of them!";
+            // 
             // MiTagger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,7 +273,7 @@
             this.MaximizeBox = false;
             this.Name = "MiTagger";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MiTagger 1.03";
+            this.Text = "MiTagger 1.04";
             this.Load += new System.EventHandler(this.MiTagger_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
@@ -298,6 +309,7 @@
         private System.Windows.Forms.ListBox ListBoxInfo;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }
 
