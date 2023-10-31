@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.IO;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -8,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MediaTags;
+using TagLib;
+using System.Security.Policy;
 
 namespace MiTagger
 {
     public partial class MiTagger : Form
     {
         const int TOKENCOUNT = 7;
-
-        SongInfo si = null;
-        string m_filePath = "";
+        string m_readPath = "";
+        string m_writePath = "";
 
         //---------------------------------------------------------------------------
         public MiTagger()
@@ -31,14 +32,14 @@ namespace MiTagger
             int[] arr = {60, 90};
             SetListBoxTabs(ListBoxInfo, arr);
 
-            LabelCredit.Text = "Credits: Thanks to the taglib-sharp coding team and Tim Sneith's MediaCatalog project.";
+            LabelCredit.Text = "Credits: https://github.com/mono/taglib-sharp";
 
             string[] arguments = Environment.GetCommandLineArgs();
             // NOTE: arguement[0] has the exe file name
             if (arguments.Length == 2)
             {
                 if (System.IO.File.Exists(arguments[1]))
-                    DoTags(arguments[1]);
+                    ReadTags(arguments[1]);
             }
         }
         //---------------------------------------------------------------------------
@@ -61,7 +62,7 @@ namespace MiTagger
                     while (--len != 0)
                       SpawnOurself(FileList[len]);
                 }
-                DoTags(FileList[0]);
+                ReadTags(FileList[0]);
             }
         }
         //---------------------------------------------------------------------------
@@ -77,121 +78,242 @@ namespace MiTagger
             catch {}
         }
         //---------------------------------------------------------------------------
-        private void ButtonSaveChanges_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (si != null && m_filePath != "")
-                {
-                    using (var tags = new MediaTags.MediaTags())
-                    {
-                        si = tags.Read(m_filePath);
-                        if (si != null)
-                        {
-                            var tagsCount = 0;
-                            if (si.Title != EditTitle.Text)
-                            {
-                                si.Title = EditTitle.Text;
-                                si.bTitleTag = true;
-                                tagsCount++;
-                            }
-                            if (si.Album != EditAlbum.Text)
-                            {
-                                si.Album = EditAlbum.Text;
-                                si.bAlbumTag = true;
-                                tagsCount++;
-                            }
-                            if (si.Artist != EditArtist.Text)
-                            {
-                                si.Artist = EditArtist.Text;
-                                si.bArtistTag = true;
-                                tagsCount++;
-                            }
-                            if (si.Genre != EditGenre.Text)
-                            {
-                                si.Genre = EditGenre.Text;
-                                si.bGenreTag = true;
-                                tagsCount++;
-                            }
-                            if (si.Year != EditYear.Text)
-                            {
-                                si.Year = EditYear.Text;
-                                si.bYearTag = true;
-                                tagsCount++;
-                            }
-                            if (si.Track != EditTrack.Text)
-                            {
-                                si.Track = EditTrack.Text;
-                                si.bTrackTag = true;
-                                tagsCount++;
-                            }
-                            tags.Write(si, m_filePath);
-                            MessageBox.Show("Wrote " + tagsCount + " tags to \"" + m_filePath + "\"");
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Unable to write tags to: \"" + m_filePath + "\"");
-            }
-        }
-        //---------------------------------------------------------------------------
-        private string GetFileType(int fileType)
-        {
-            switch (fileType) {
-                case 0:
-                    return "WMA";
-                case 1:
-                    return "MP3";
-                default:
-                    return "unknown";
-            };
-        }
-        //---------------------------------------------------------------------------
-        private void fIleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    DoTags(openFileDialog.FileName);
+                    ReadTags(openFileDialog.FileName);
             }
         }
         //---------------------------------------------------------------------------
-        private void DoTags(String filePath)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var tagReader = new MediaTags.MediaTags())
+            WriteTags(m_writePath, checkBoxClearPreExistingTags.Checked);
+        }
+        //---------------------------------------------------------------------------
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                m_filePath = filePath;
-                if ((si = tagReader.Read(m_filePath)) != null)
+                // https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.savefiledialog?view=windowsdesktop-7.0
+                //saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                //saveFileDialog.FilterIndex = 2;
+                saveFileDialog.OverwritePrompt = false;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    WriteTags(saveFileDialog.FileName, checkBoxClearPreExistingTags.Checked);
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void ReadTags(String filePath)
+        {
+            if (String.IsNullOrEmpty(filePath))
+                return;
+
+            TagLib.File file = null;
+            try
+            {
+                file = TagLib.File.Create(filePath);
+                m_readPath = filePath;
+            }
+            catch
+            {
+                m_readPath = "";
+            }
+
+            var fileInfo = new FileInfo(filePath);
+
+            if (m_readPath.Length == 0)
+            {
+                try
                 {
-                    if (si.bException)
-                      MessageBox.Show("Read fault... please retry!");
+                    m_readPath = new Uri(fileInfo.FullName).ToString();
+                    FileAbstraction fa = new FileAbstraction(m_readPath);
+                    if (fa != null)
+                    {
+                        file = TagLib.File.Create(fa.Name);
+                    }
                     else
                     {
-                      EditTitle.Text = StripTab(si.Title);
-                      EditAlbum.Text = StripTab(si.Album);
-                      EditArtist.Text = StripTab(si.Artist);
-                      EditGenre.Text = StripTab(si.Genre);
-                      EditYear.Text = StripTab(si.Year);
-                      EditTrack.Text = StripTab(si.Track);
-                      LabelPath.Text = m_filePath;
-                      ListBoxInfo.Items.Clear();
-                      if (si.BitRate >= 0)
-                          ListBoxInfo.Items.Add("Bit rate:\t" + si.BitRate);
-                      if (si.SampleRate >= 0)
-                        ListBoxInfo.Items.Add("Sample rate:\t" + si.SampleRate);
-                      if (si.Channels >= 0)
-                          ListBoxInfo.Items.Add("Channels:\t " + si.Channels);
-                      if (si.FileType >= 0)
-                          ListBoxInfo.Items.Add("File type:\t" + GetFileType(si.FileType));
-                      if (si.FileSize >= 0)
-                          ListBoxInfo.Items.Add("File size:\t" + si.FileSize);
-                      if (si.Duration != null)
-                          ListBoxInfo.Items.Add("Duration:\t" + si.Duration);
+                        MessageBox.Show("Unable to create fileAbstraction for: " + fa.Name);
+                        return;
                     }
                 }
+                catch
+                {
+                    MessageBox.Show($"Unsupported file: {filePath}");
+                    m_readPath = "";
+                    return;
+                }
             }
+
+            m_writePath = m_readPath;
+
+            if (file.PossiblyCorrupt)
+                LabelPath.Text = "(POSSIBLY CORRUPT!) " + m_readPath;
+            else
+                LabelPath.Text = m_readPath;
+
+            EditArtists.Text = ArrayToCommaString(file.Tag.AlbumArtists);
+            EditGenres.Text = ArrayToCommaString(file.Tag.Genres);
+            EditTitle.Text = StripTab(file.Tag.Title);
+            EditAlbum.Text = StripTab(file.Tag.Album);
+            EditYear.Text = StripTab(file.Tag.Year.ToString());
+            EditTrack.Text = StripTab(file.Tag.Track.ToString());
+
+            ListBoxInfo.Items.Clear();
+
+            foreach (var codec in file.Properties.Codecs)
+            {
+                if (codec is IAudioCodec acodec && (acodec.MediaTypes & MediaTypes.Audio) != MediaTypes.None)
+                {
+                    ListBoxInfo.Items.Add($"Audio Properties\t: {acodec.Description}");
+                    ListBoxInfo.Items.Add($"Bit Rate:\t{acodec.AudioBitrate}");
+                    ListBoxInfo.Items.Add($"Sample Rate:\t{acodec.AudioSampleRate}");
+                    ListBoxInfo.Items.Add($"Channels:\t{acodec.AudioChannels}\n");
+                }
+
+                if (codec is IVideoCodec vcodec && (vcodec.MediaTypes & MediaTypes.Video) != MediaTypes.None)
+                {
+                    ListBoxInfo.Items.Add($"Video Properties:\t{vcodec.Description}");
+                    ListBoxInfo.Items.Add($"Width:\t{vcodec.VideoWidth}");
+                    ListBoxInfo.Items.Add($"Height:\t{vcodec.VideoHeight}\n");
+                }
+            }
+
+            TagLib.MediaTypes mt = file.Properties.MediaTypes;
+            if (mt != MediaTypes.None)
+                ListBoxInfo.Items.Add($"Media Type:\t{mt}\n");
+
+            ListBoxInfo.Items.Add($"Duration:\t{file.Properties.Duration}\n");
+            ListBoxInfo.Items.Add($"File Size:\t{fileInfo.Length}");
+        }
+        //---------------------------------------------------------------------------
+        private bool WriteTags(String filePath, bool bClearPreExistingTags)
+        {
+            if (String.IsNullOrEmpty(filePath))
+                return false;
+
+            TagLib.File file = null;
+            try
+            {
+                file = TagLib.File.Create(filePath);
+                m_readPath = filePath;
+            }
+            catch
+            {
+                m_readPath = "";
+            }
+
+            var fileInfo = new FileInfo(filePath);
+
+            if (m_readPath.Length == 0)
+            {
+                try
+                {
+                    m_readPath = new Uri(fileInfo.FullName).ToString();
+                    FileAbstraction fa = new FileAbstraction(m_readPath);
+                    if (fa != null)
+                    {
+                        file = TagLib.File.Create(fa.Name);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to create fileAbstraction for: " + fa.Name);
+                        return false;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show($"Unsupported file: {filePath}");
+                    m_readPath = "";
+                    return false;
+                }
+            }
+
+            string artists = ArrayToCommaString(file.Tag.AlbumArtists);
+            string genres = ArrayToCommaString(file.Tag.Genres);
+            string title = StripTab(file.Tag.Title);
+            string album = StripTab(file.Tag.Album);
+            string year = StripTab(file.Tag.Year.ToString());
+            string track = StripTab(file.Tag.Track.ToString());
+
+            // Clear pre-existing tags during "Save As"
+            if (bClearPreExistingTags)
+                file.Tag.Clear();
+
+            var tagsCount = 0;
+            if (bClearPreExistingTags || artists != EditArtists.Text)
+            {
+                file.Tag.AlbumArtists = CommaStringToArray(EditArtists.Text);
+                tagsCount++;
+            }
+            if (bClearPreExistingTags || genres != EditGenres.Text)
+            {
+                file.Tag.Genres = CommaStringToArray(EditGenres.Text);
+                tagsCount++;
+            }
+            if (bClearPreExistingTags || title != EditTitle.Text)
+            {
+                file.Tag.Title = EditTitle.Text;
+                tagsCount++;
+            }
+            if (bClearPreExistingTags || album != EditAlbum.Text)
+            {
+                file.Tag.Album = EditAlbum.Text;
+                tagsCount++;
+            }
+            if (bClearPreExistingTags || year != EditYear.Text)
+            {
+                int iYear = -1;
+                try
+                {
+                    iYear = Convert.ToInt32(EditYear.Text);
+                }
+                catch { }
+
+                if (iYear >= 0)
+                {
+                    file.Tag.Year = (uint)iYear;
+                    tagsCount++;
+                }
+            }
+            if (bClearPreExistingTags || track != EditTrack.Text)
+            {
+                int iTrack = -1;
+                try
+                {
+                    iTrack = Convert.ToInt32(EditTrack.Text);
+                }
+                catch { }
+
+                if (iTrack >= 0)
+                {
+                    file.Tag.Track = (uint)iTrack;
+                    tagsCount++;
+                }
+            }
+            if (tagsCount > 0)
+            {
+                try
+                {
+                    file.Save();
+                    m_writePath = filePath;
+                    LabelPath.Text = m_writePath;
+                    MessageBox.Show($"Wrote {tagsCount} changed tags to \"{m_writePath}\"!");
+                }
+                catch
+                {
+                    MessageBox.Show($"Unable to write {tagsCount} tags to \"{m_writePath}\"!");
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No changed tags to write!");
+            }
+            return true;
         }
         //---------------------------------------------------------------------------
         private void SetListBoxTabs(ListBox lst, IEnumerable<int> tabs)
@@ -244,6 +366,22 @@ namespace MiTagger
             }
         }
         //---------------------------------------------------------------------------
+        private string ArrayToCommaString(string[] sArray){
+            string sTabStr = "";
+            foreach (string s in sArray){
+                String sStrip = StripTab(s);
+                if (sStrip.Length > 0)
+                    sTabStr += sStrip + ", ";
+            }
+            while (sTabStr.EndsWith(",") || sTabStr.EndsWith(" "))
+                sTabStr = sTabStr.Substring(0, sTabStr.Length - 1);
+            return sTabStr;
+        }
+        //---------------------------------------------------------------------------
+        private string[] CommaStringToArray(string sCommaString){
+            return sCommaString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+        }
+        //---------------------------------------------------------------------------
         // sIn has a comma-seperated list of TOKENCOUNT strings each delimited by the tab-character
         // (NOTE: I used tab-char instead of quotes around each token because we might have a quote
         // char used in one of the song's tags...)
@@ -276,9 +414,9 @@ namespace MiTagger
                 if (sIdentifier != "ENDSMTAGS")
                     return -2;
                 EditTitle.Text = StripTab(sl[6]);
-                EditArtist.Text = StripTab(sl[5]);
+                EditArtists.Text = StripTab(sl[5]);
                 EditAlbum.Text = StripTab(sl[4]);
-                EditGenre.Text = StripTab(sl[3]);
+                EditGenres.Text = StripTab(sl[3]);
                 EditYear.Text = StripTab(sl[2]);
                 EditTrack.Text = StripTab(sl[1]);
             }
@@ -293,6 +431,8 @@ namespace MiTagger
         // (NOTE: allow for string having extraneous leading/trailing blanks)
         private String StripTab(String sIn)
         {
+            if (String.IsNullOrEmpty(sIn))
+                return "";
             return sIn.Trim().Replace("\t", "");
         }
         //---------------------------------------------------------------------------
@@ -304,9 +444,9 @@ namespace MiTagger
             try
             {
                 sOut += "\t" + EditTitle.Text + "\t," +
-                        "\t" + EditArtist.Text + "\t," +
+                        "\t" + EditArtists.Text + "\t," +
                         "\t" + EditAlbum.Text + "\t," +
-                        "\t" + EditGenre.Text + "\t," +
+                        "\t" + EditGenres.Text + "\t," +
                         "\t" + EditYear.Text + "\t," +
                         "\t" + EditTrack.Text + "\t," +
                         "\tENDSMTAGS\t"; // use this to validate the clipboard data
@@ -315,5 +455,31 @@ namespace MiTagger
             return sOut;
         }
         //---------------------------------------------------------------------------
+    }
+
+    public class FileAbstraction : TagLib.File.IFileAbstraction
+    {
+        public FileAbstraction(string file)
+        {
+            Name = file;
+        }
+        public string Name { get; }
+        public Stream ReadStream => MakeStream(Name);
+        public Stream WriteStream => MakeStream(Name);
+        private FileStream MakeStream(string name)
+        {
+            try
+            {
+                return new FileStream(name, FileMode.Open);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public void CloseStream(Stream stream)
+        {
+            stream.Close();
+        }
     }
 }

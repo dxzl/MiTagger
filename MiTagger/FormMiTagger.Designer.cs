@@ -28,21 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiTagger));
             this.LabelPath = new System.Windows.Forms.Label();
             this.LabelCredit = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxClearPreExistingTags = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.ButtonPasteTags = new System.Windows.Forms.Button();
             this.ButtonCopyTags = new System.Windows.Forms.Button();
-            this.ButtonSaveChanges = new System.Windows.Forms.Button();
             this.LabelTrack = new System.Windows.Forms.Label();
             this.EditTrack = new System.Windows.Forms.TextBox();
             this.LabelYear = new System.Windows.Forms.Label();
             this.EditYear = new System.Windows.Forms.TextBox();
             this.LabelGenre = new System.Windows.Forms.Label();
-            this.EditGenre = new System.Windows.Forms.TextBox();
+            this.EditGenres = new System.Windows.Forms.TextBox();
             this.LabelArtist = new System.Windows.Forms.Label();
-            this.EditArtist = new System.Windows.Forms.TextBox();
+            this.EditArtists = new System.Windows.Forms.TextBox();
             this.LabelAlbum = new System.Windows.Forms.Label();
             this.EditAlbum = new System.Windows.Forms.TextBox();
             this.LabelTitle = new System.Windows.Forms.Label();
@@ -50,7 +52,11 @@
             this.ListBoxInfo = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -75,18 +81,18 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxClearPreExistingTags);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ButtonPasteTags);
             this.groupBox1.Controls.Add(this.ButtonCopyTags);
-            this.groupBox1.Controls.Add(this.ButtonSaveChanges);
             this.groupBox1.Controls.Add(this.LabelTrack);
             this.groupBox1.Controls.Add(this.EditTrack);
             this.groupBox1.Controls.Add(this.LabelYear);
             this.groupBox1.Controls.Add(this.EditYear);
             this.groupBox1.Controls.Add(this.LabelGenre);
-            this.groupBox1.Controls.Add(this.EditGenre);
+            this.groupBox1.Controls.Add(this.EditGenres);
             this.groupBox1.Controls.Add(this.LabelArtist);
-            this.groupBox1.Controls.Add(this.EditArtist);
+            this.groupBox1.Controls.Add(this.EditArtists);
             this.groupBox1.Controls.Add(this.LabelAlbum);
             this.groupBox1.Controls.Add(this.EditAlbum);
             this.groupBox1.Controls.Add(this.LabelTitle);
@@ -97,6 +103,26 @@
             this.groupBox1.Size = new System.Drawing.Size(563, 227);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // checkBoxClearPreExistingTags
+            // 
+            this.checkBoxClearPreExistingTags.AutoSize = true;
+            this.checkBoxClearPreExistingTags.Location = new System.Drawing.Point(65, 175);
+            this.checkBoxClearPreExistingTags.Name = "checkBoxClearPreExistingTags";
+            this.checkBoxClearPreExistingTags.Size = new System.Drawing.Size(227, 17);
+            this.checkBoxClearPreExistingTags.TabIndex = 17;
+            this.checkBoxClearPreExistingTags.Text = "Clear pre-existing tags on Save or Save As";
+            this.toolTip1.SetToolTip(this.checkBoxClearPreExistingTags, "Check this to erase other tags that are not displayed by MiTagger");
+            this.checkBoxClearPreExistingTags.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 211);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(370, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "*Tip: You can drag-drop multiple song files onto MiTagger to open all of them!";
             // 
             // ButtonPasteTags
             // 
@@ -117,16 +143,6 @@
             this.ButtonCopyTags.Text = "Copy Tags";
             this.ButtonCopyTags.UseVisualStyleBackColor = true;
             this.ButtonCopyTags.Click += new System.EventHandler(this.ButtonCopyTags_Click);
-            // 
-            // ButtonSaveChanges
-            // 
-            this.ButtonSaveChanges.Location = new System.Drawing.Point(141, 177);
-            this.ButtonSaveChanges.Name = "ButtonSaveChanges";
-            this.ButtonSaveChanges.Size = new System.Drawing.Size(104, 23);
-            this.ButtonSaveChanges.TabIndex = 13;
-            this.ButtonSaveChanges.Text = "Save changes";
-            this.ButtonSaveChanges.UseVisualStyleBackColor = true;
-            this.ButtonSaveChanges.Click += new System.EventHandler(this.ButtonSaveChanges_Click);
             // 
             // LabelTrack
             // 
@@ -165,32 +181,34 @@
             this.LabelGenre.AutoSize = true;
             this.LabelGenre.Location = new System.Drawing.Point(6, 107);
             this.LabelGenre.Name = "LabelGenre";
-            this.LabelGenre.Size = new System.Drawing.Size(36, 13);
+            this.LabelGenre.Size = new System.Drawing.Size(47, 13);
             this.LabelGenre.TabIndex = 8;
-            this.LabelGenre.Text = "Genre";
+            this.LabelGenre.Text = "Genre(s)";
             // 
-            // EditGenre
+            // EditGenres
             // 
-            this.EditGenre.Location = new System.Drawing.Point(65, 104);
-            this.EditGenre.Name = "EditGenre";
-            this.EditGenre.Size = new System.Drawing.Size(266, 20);
-            this.EditGenre.TabIndex = 7;
+            this.EditGenres.Location = new System.Drawing.Point(65, 104);
+            this.EditGenres.Name = "EditGenres";
+            this.EditGenres.Size = new System.Drawing.Size(266, 20);
+            this.EditGenres.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.EditGenres, "Comma-separated list of genres");
             // 
             // LabelArtist
             // 
             this.LabelArtist.AutoSize = true;
             this.LabelArtist.Location = new System.Drawing.Point(6, 78);
             this.LabelArtist.Name = "LabelArtist";
-            this.LabelArtist.Size = new System.Drawing.Size(30, 13);
+            this.LabelArtist.Size = new System.Drawing.Size(41, 13);
             this.LabelArtist.TabIndex = 6;
-            this.LabelArtist.Text = "Artist";
+            this.LabelArtist.Text = "Artist(s)";
             // 
-            // EditArtist
+            // EditArtists
             // 
-            this.EditArtist.Location = new System.Drawing.Point(65, 75);
-            this.EditArtist.Name = "EditArtist";
-            this.EditArtist.Size = new System.Drawing.Size(266, 20);
-            this.EditArtist.TabIndex = 5;
+            this.EditArtists.Location = new System.Drawing.Point(65, 75);
+            this.EditArtists.Name = "EditArtists";
+            this.EditArtists.Size = new System.Drawing.Size(266, 20);
+            this.EditArtists.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.EditArtists, "Comma-separated list of artists");
             // 
             // LabelAlbum
             // 
@@ -244,19 +262,50 @@
             // 
             // fIleToolStripMenuItem
             // 
+            this.fIleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem});
             this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fIleToolStripMenuItem.Text = "&File";
-            this.fIleToolStripMenuItem.Click += new System.EventHandler(this.fIleToolStripMenuItem_Click);
             // 
-            // label1
+            // openToolStripMenuItem
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 211);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(370, 13);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "*Tip: You can drag-drop multiple song files onto MiTagger to open all of them!";
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(183, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.saveAsToolStripMenuItem.Text = "&Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 350;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // MiTagger
             // 
@@ -273,7 +322,7 @@
             this.MaximizeBox = false;
             this.Name = "MiTagger";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MiTagger 1.04";
+            this.Text = "MiTagger 1.05";
             this.Load += new System.EventHandler(this.MiTagger_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
@@ -293,15 +342,14 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button ButtonPasteTags;
         private System.Windows.Forms.Button ButtonCopyTags;
-        private System.Windows.Forms.Button ButtonSaveChanges;
         private System.Windows.Forms.Label LabelTrack;
         private System.Windows.Forms.TextBox EditTrack;
         private System.Windows.Forms.Label LabelYear;
         private System.Windows.Forms.TextBox EditYear;
         private System.Windows.Forms.Label LabelGenre;
-        private System.Windows.Forms.TextBox EditGenre;
+        private System.Windows.Forms.TextBox EditGenres;
         private System.Windows.Forms.Label LabelArtist;
-        private System.Windows.Forms.TextBox EditArtist;
+        private System.Windows.Forms.TextBox EditArtists;
         private System.Windows.Forms.Label LabelAlbum;
         private System.Windows.Forms.TextBox EditAlbum;
         private System.Windows.Forms.Label LabelTitle;
@@ -310,6 +358,12 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBoxClearPreExistingTags;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

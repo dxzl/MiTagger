@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MiTagger</RootNamespace>
     <AssemblyName>MiTagger</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -80,7 +82,7 @@
     <AssemblyOriginatorKeyFile>DtsUWP.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>67E2B13C181ECA84342030DA517949FFCB333DCC</ManifestCertificateThumbprint>
@@ -140,21 +142,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MediaTagSharp\src\MediaTags\MediaTags.csproj">
-      <Project>{f0426bab-cbdf-448f-8a49-35f5e94bd076}</Project>
-      <Name>MediaTags</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MediaTagSharp\src\Taglib-Sharp\TaglibSharp.csproj">
-      <Project>{6b143a39-c7b2-4743-9917-92262c60e9a6}</Project>
-      <Name>TaglibSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MediaTagSharp\src\WinMediaLib\WinMediaLib.csproj">
-      <Project>{55f32df2-0e4b-4e03-9a02-c511854c4199}</Project>
-      <Name>WinMediaLib</Name>
-    </ProjectReference>
+    <Content Include="MiTagger.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MiTagger.ico" />
+    <ProjectReference Include="..\..\taglib-sharp-main\src\TaglibSharp\TaglibSharp.csproj">
+      <Project>{98de14cb-75f2-4631-b065-e61989547e87}</Project>
+      <Name>TaglibSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
