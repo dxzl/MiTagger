@@ -160,12 +160,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C122AAAE39D288BBA8EC9BF1834CCB1F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_12106D37C5014A82B295B9D8C96250D9"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -265,6 +259,12 @@
         "OwnerKey" = "8:_8577DA95ABC18538D7BD961BF2CDA160"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C122AAAE39D288BBA8EC9BF1834CCB1F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -352,7 +352,7 @@
                 {
                 "Name" = "8:.NET Framework 4"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.0  "
+                "FrameworkVersion" = "8:v4.0    "
                 "AllowLaterVersions" = "11:TRUE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=155570"
                 }
@@ -446,7 +446,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.0.5.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.0.7.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_12106D37C5014A82B295B9D8C96250D9"
@@ -1096,15 +1096,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MiTagger"
-        "ProductCode" = "8:{B5FFECAA-F25E-41AC-B1B9-85C9DA41B3EA}"
-        "PackageCode" = "8:{4F5F1FE8-A008-497C-B3EE-7B6F2192138E}"
+        "ProductCode" = "8:{641308B4-107C-4111-BDB3-4324F8F28AE6}"
+        "PackageCode" = "8:{85519030-063B-4B2B-A1E3-D592F7304867}"
         "UpgradeCode" = "8:{57D7F139-6D7B-43FB-B6C3-4BFC24404154}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.05"
+        "ProductVersion" = "8:1.07"
         "Manufacturer" = "8:Discrete-Time Systems"
         "ARPHELPTELEPHONE" = "8:dxzl@live.com"
         "ARPHELPLINK" = "8:"
@@ -1248,7 +1248,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D7A59EADCAAE4809A0D8CFB2467E5BE5"
             {
             "Name" = "8:Uninstall MiTagger"
-            "Arguments" = "8:{B5FFECAA-F25E-41AC-B1B9-85C9DA41B3EA}"
+            "Arguments" = "8:{641308B4-107C-4111-BDB3-4324F8F28AE6}"
             "Description" = "8:Uninstall MiTagger"
             "ShowCmd" = "3:7"
             "IconIndex" = "3:0"

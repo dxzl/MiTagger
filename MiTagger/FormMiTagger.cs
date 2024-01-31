@@ -17,6 +17,7 @@ namespace MiTagger
     public partial class MiTagger : Form
     {
         const int TOKENCOUNT = 7;
+        const int MAXDROPFILES = 30;
         string m_readPath = "";
         string m_writePath = "";
 
@@ -57,12 +58,13 @@ namespace MiTagger
             int len = FileList.Length;
             if (len > 0)
             {
-                if (len > 1 && len < 20)
-                {
+                if (len > 1 && len < MAXDROPFILES)
                     while (--len != 0)
                       SpawnOurself(FileList[len]);
-                }
-                ReadTags(FileList[0]);
+                if (String.IsNullOrEmpty(m_readPath) || m_readPath == FileList[0])
+                  ReadTags(FileList[0]);
+                else
+                  SpawnOurself(FileList[0]);
             }
         }
         //---------------------------------------------------------------------------
@@ -157,10 +159,10 @@ namespace MiTagger
 
             EditArtists.Text = ArrayToCommaString(file.Tag.AlbumArtists);
             EditGenres.Text = ArrayToCommaString(file.Tag.Genres);
-            EditTitle.Text = StripTab(file.Tag.Title);
-            EditAlbum.Text = StripTab(file.Tag.Album);
-            EditYear.Text = StripTab(file.Tag.Year.ToString());
-            EditTrack.Text = StripTab(file.Tag.Track.ToString());
+            EditTitle.Text = file.Tag.Title;
+            EditAlbum.Text = file.Tag.Album;
+            EditYear.Text = file.Tag.Year.ToString();
+            EditTrack.Text = file.Tag.Track.ToString();
 
             ListBoxInfo.Items.Clear();
 
@@ -234,10 +236,10 @@ namespace MiTagger
 
             string artists = ArrayToCommaString(file.Tag.AlbumArtists);
             string genres = ArrayToCommaString(file.Tag.Genres);
-            string title = StripTab(file.Tag.Title);
-            string album = StripTab(file.Tag.Album);
-            string year = StripTab(file.Tag.Year.ToString());
-            string track = StripTab(file.Tag.Track.ToString());
+            string title = file.Tag.Title;
+            string album = file.Tag.Album;
+            string year = file.Tag.Year.ToString();
+            string track = file.Tag.Track.ToString();
 
             // Clear pre-existing tags during "Save As"
             if (bClearPreExistingTags)
@@ -337,7 +339,7 @@ namespace MiTagger
             try
             {
                 Clipboard.Clear();
-                String sTags = GetTagsAsString();
+                String sTags = GetTagsAsCommaSeparatedBase64String();
                 if ((sTags.Length > 0))
                     Clipboard.SetText(sTags);
                 else
@@ -354,7 +356,7 @@ namespace MiTagger
             try
             {
                 String sTags = Clipboard.GetText();
-                int retCode = SetTagsFromString(sTags);
+                int retCode = SetTagsFromCommaSeparatedBase64String(sTags);
                 if (retCode == -1)
                     MessageBox.Show("Select \"Copy Tags\" before you can \"Paste Tags\"!");
                 else if (retCode< 0)
@@ -367,25 +369,20 @@ namespace MiTagger
         }
         //---------------------------------------------------------------------------
         private string ArrayToCommaString(string[] sArray){
-            string sTabStr = "";
-            foreach (string s in sArray){
-                String sStrip = StripTab(s);
-                if (sStrip.Length > 0)
-                    sTabStr += sStrip + ", ";
-            }
-            while (sTabStr.EndsWith(",") || sTabStr.EndsWith(" "))
-                sTabStr = sTabStr.Substring(0, sTabStr.Length - 1);
-            return sTabStr;
+            string sCommaStr = "";
+            foreach (string s in sArray)
+                sCommaStr += "," + s;
+            if (sCommaStr.StartsWith(","))
+                sCommaStr = sCommaStr.Substring(1);
+            return sCommaStr;
         }
         //---------------------------------------------------------------------------
         private string[] CommaStringToArray(string sCommaString){
-            return sCommaString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            return sCommaString.Split(new char[] { ',' }, StringSplitOptions.None).ToArray();
         }
         //---------------------------------------------------------------------------
-        // sIn has a comma-seperated list of TOKENCOUNT strings each delimited by the tab-character
-        // (NOTE: I used tab-char instead of quotes around each token because we might have a quote
-        // char used in one of the song's tags...)
-        private int SetTagsFromString(String sIn)
+        // sIn has a comma-seperated list of TOKENCOUNT base-64 strings
+        private int SetTagsFromCommaSeparatedBase64String(String sIn)
         {
             try
             {
@@ -401,24 +398,24 @@ namespace MiTagger
                     {
                         String sTok = sIn.Substring(pos + 1, len - pos - 1);
                         sIn = sIn.Substring(0, pos);
-                        sl[ii] = sTok; // add tokens except for first
+                        sl[ii] = Base64Decode(sTok); // add tokens except for first
                     }
                     else
                         break;
                 }
                 if (ii != TOKENCOUNT - 1)
                     return -1;
-                sl[ii] = sIn; // add first token (what's left of sIn after other tokens snipped off...)
+                sl[ii] = Base64Decode(sIn); // add first token (what's left of sIn after other tokens snipped off...)
 
-                String sIdentifier = StripTab(sl[0]);
+                String sIdentifier = sl[0];
                 if (sIdentifier != "ENDSMTAGS")
                     return -2;
-                EditTitle.Text = StripTab(sl[6]);
-                EditArtists.Text = StripTab(sl[5]);
-                EditAlbum.Text = StripTab(sl[4]);
-                EditGenres.Text = StripTab(sl[3]);
-                EditYear.Text = StripTab(sl[2]);
-                EditTrack.Text = StripTab(sl[1]);
+                EditTrack.Text = sl[1];
+                EditYear.Text = sl[2];
+                EditGenres.Text = sl[3];
+                EditAlbum.Text = sl[4];
+                EditArtists.Text = sl[5];
+                EditTitle.Text = sl[6];
             }
             catch
             {
@@ -427,32 +424,33 @@ namespace MiTagger
             return 0;
         }
         //---------------------------------------------------------------------------
-        // strips quotes (actually the tab character!) from quoted string
-        // (NOTE: allow for string having extraneous leading/trailing blanks)
-        private String StripTab(String sIn)
-        {
-            if (String.IsNullOrEmpty(sIn))
-                return "";
-            return sIn.Trim().Replace("\t", "");
-        }
-        //---------------------------------------------------------------------------
-        //http://docwiki.embarcadero.com/RADStudio/Sydney/en/UTF-8_Conversion_Routines
-        private String GetTagsAsString()
+        private String GetTagsAsCommaSeparatedBase64String()
         {
             String sOut = "";
 
             try
             {
-                sOut += "\t" + EditTitle.Text + "\t," +
-                        "\t" + EditArtists.Text + "\t," +
-                        "\t" + EditAlbum.Text + "\t," +
-                        "\t" + EditGenres.Text + "\t," +
-                        "\t" + EditYear.Text + "\t," +
-                        "\t" + EditTrack.Text + "\t," +
-                        "\tENDSMTAGS\t"; // use this to validate the clipboard data
+                sOut += Base64Encode(EditTitle.Text) + "," +
+                        Base64Encode(EditArtists.Text) + "," +
+                        Base64Encode(EditAlbum.Text) + "," +
+                        Base64Encode(EditGenres.Text) + "," +
+                        Base64Encode(EditYear.Text) + "," +
+                        Base64Encode(EditTrack.Text) + "," +
+                        Base64Encode("ENDSMTAGS"); // use this to validate the clipboard data
             }
             catch { }
             return sOut;
+        }
+        //---------------------------------------------------------------------------
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
         //---------------------------------------------------------------------------
     }
