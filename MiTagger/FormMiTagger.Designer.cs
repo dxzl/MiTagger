@@ -33,6 +33,10 @@
             this.LabelPath = new System.Windows.Forms.Label();
             this.LabelCredit = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ButtonQuit = new System.Windows.Forms.Button();
+            this.LabelComment = new System.Windows.Forms.Label();
+            this.EditComment = new System.Windows.Forms.TextBox();
+            this.ButtonSave = new System.Windows.Forms.Button();
             this.checkBoxClearPreExistingTags = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ButtonPasteTags = new System.Windows.Forms.Button();
@@ -56,7 +60,13 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.TimerMiMessage = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +74,7 @@
             // LabelPath
             // 
             this.LabelPath.AutoSize = true;
-            this.LabelPath.Location = new System.Drawing.Point(-1, 266);
+            this.LabelPath.Location = new System.Drawing.Point(-1, 321);
             this.LabelPath.Name = "LabelPath";
             this.LabelPath.Size = new System.Drawing.Size(32, 13);
             this.LabelPath.TabIndex = 1;
@@ -73,7 +83,7 @@
             // LabelCredit
             // 
             this.LabelCredit.AutoSize = true;
-            this.LabelCredit.Location = new System.Drawing.Point(-1, 288);
+            this.LabelCredit.Location = new System.Drawing.Point(-1, 344);
             this.LabelCredit.Name = "LabelCredit";
             this.LabelCredit.Size = new System.Drawing.Size(37, 13);
             this.LabelCredit.TabIndex = 2;
@@ -81,6 +91,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ButtonQuit);
+            this.groupBox1.Controls.Add(this.LabelComment);
+            this.groupBox1.Controls.Add(this.EditComment);
+            this.groupBox1.Controls.Add(this.ButtonSave);
             this.groupBox1.Controls.Add(this.checkBoxClearPreExistingTags);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ButtonPasteTags);
@@ -98,16 +112,55 @@
             this.groupBox1.Controls.Add(this.LabelTitle);
             this.groupBox1.Controls.Add(this.EditTitle);
             this.groupBox1.Controls.Add(this.ListBoxInfo);
-            this.groupBox1.Location = new System.Drawing.Point(12, 26);
+            this.groupBox1.Location = new System.Drawing.Point(2, 26);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(563, 227);
+            this.groupBox1.Size = new System.Drawing.Size(585, 292);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // ButtonQuit
+            // 
+            this.ButtonQuit.Location = new System.Drawing.Point(482, 248);
+            this.ButtonQuit.Name = "ButtonQuit";
+            this.ButtonQuit.Size = new System.Drawing.Size(75, 23);
+            this.ButtonQuit.TabIndex = 11;
+            this.ButtonQuit.Text = "Quit";
+            this.ButtonQuit.UseVisualStyleBackColor = true;
+            this.ButtonQuit.Click += new System.EventHandler(this.ButtonClose_Click);
+            // 
+            // LabelComment
+            // 
+            this.LabelComment.AutoSize = true;
+            this.LabelComment.Location = new System.Drawing.Point(6, 139);
+            this.LabelComment.Name = "LabelComment";
+            this.LabelComment.Size = new System.Drawing.Size(51, 13);
+            this.LabelComment.TabIndex = 0;
+            this.LabelComment.Text = "Comment";
+            // 
+            // EditComment
+            // 
+            this.EditComment.Location = new System.Drawing.Point(65, 136);
+            this.EditComment.Multiline = true;
+            this.EditComment.Name = "EditComment";
+            this.EditComment.Size = new System.Drawing.Size(266, 57);
+            this.EditComment.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.EditComment, "Comma-separated list of genres");
+            // 
+            // ButtonSave
+            // 
+            this.ButtonSave.Enabled = false;
+            this.ButtonSave.Location = new System.Drawing.Point(387, 248);
+            this.ButtonSave.Name = "ButtonSave";
+            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSave.TabIndex = 10;
+            this.ButtonSave.Text = "Save";
+            this.ButtonSave.UseVisualStyleBackColor = true;
+            this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // checkBoxClearPreExistingTags
             // 
             this.checkBoxClearPreExistingTags.AutoSize = true;
-            this.checkBoxClearPreExistingTags.Location = new System.Drawing.Point(65, 175);
+            this.checkBoxClearPreExistingTags.Location = new System.Drawing.Point(54, 248);
             this.checkBoxClearPreExistingTags.Name = "checkBoxClearPreExistingTags";
             this.checkBoxClearPreExistingTags.Size = new System.Drawing.Size(227, 17);
             this.checkBoxClearPreExistingTags.TabIndex = 17;
@@ -118,7 +171,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 211);
+            this.label1.Location = new System.Drawing.Point(-3, 276);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(370, 13);
             this.label1.TabIndex = 16;
@@ -126,20 +179,20 @@
             // 
             // ButtonPasteTags
             // 
-            this.ButtonPasteTags.Location = new System.Drawing.Point(467, 149);
+            this.ButtonPasteTags.Location = new System.Drawing.Point(482, 206);
             this.ButtonPasteTags.Name = "ButtonPasteTags";
             this.ButtonPasteTags.Size = new System.Drawing.Size(75, 23);
-            this.ButtonPasteTags.TabIndex = 15;
+            this.ButtonPasteTags.TabIndex = 9;
             this.ButtonPasteTags.Text = "Paste Tags";
             this.ButtonPasteTags.UseVisualStyleBackColor = true;
             this.ButtonPasteTags.Click += new System.EventHandler(this.ButtonPasteTags_Click);
             // 
             // ButtonCopyTags
             // 
-            this.ButtonCopyTags.Location = new System.Drawing.Point(368, 149);
+            this.ButtonCopyTags.Location = new System.Drawing.Point(387, 206);
             this.ButtonCopyTags.Name = "ButtonCopyTags";
             this.ButtonCopyTags.Size = new System.Drawing.Size(75, 23);
-            this.ButtonCopyTags.TabIndex = 14;
+            this.ButtonCopyTags.TabIndex = 8;
             this.ButtonCopyTags.Text = "Copy Tags";
             this.ButtonCopyTags.UseVisualStyleBackColor = true;
             this.ButtonCopyTags.Click += new System.EventHandler(this.ButtonCopyTags_Click);
@@ -147,34 +200,34 @@
             // LabelTrack
             // 
             this.LabelTrack.AutoSize = true;
-            this.LabelTrack.Location = new System.Drawing.Point(182, 138);
+            this.LabelTrack.Location = new System.Drawing.Point(154, 206);
             this.LabelTrack.Name = "LabelTrack";
             this.LabelTrack.Size = new System.Drawing.Size(35, 13);
-            this.LabelTrack.TabIndex = 12;
+            this.LabelTrack.TabIndex = 0;
             this.LabelTrack.Text = "Track";
             // 
             // EditTrack
             // 
-            this.EditTrack.Location = new System.Drawing.Point(241, 135);
+            this.EditTrack.Location = new System.Drawing.Point(195, 203);
             this.EditTrack.Name = "EditTrack";
-            this.EditTrack.Size = new System.Drawing.Size(90, 20);
-            this.EditTrack.TabIndex = 11;
+            this.EditTrack.Size = new System.Drawing.Size(72, 20);
+            this.EditTrack.TabIndex = 7;
             // 
             // LabelYear
             // 
             this.LabelYear.AutoSize = true;
-            this.LabelYear.Location = new System.Drawing.Point(6, 138);
+            this.LabelYear.Location = new System.Drawing.Point(18, 206);
             this.LabelYear.Name = "LabelYear";
             this.LabelYear.Size = new System.Drawing.Size(29, 13);
-            this.LabelYear.TabIndex = 10;
+            this.LabelYear.TabIndex = 0;
             this.LabelYear.Text = "Year";
             // 
             // EditYear
             // 
-            this.EditYear.Location = new System.Drawing.Point(65, 135);
+            this.EditYear.Location = new System.Drawing.Point(65, 203);
             this.EditYear.Name = "EditYear";
-            this.EditYear.Size = new System.Drawing.Size(83, 20);
-            this.EditYear.TabIndex = 9;
+            this.EditYear.Size = new System.Drawing.Size(72, 20);
+            this.EditYear.TabIndex = 6;
             // 
             // LabelGenre
             // 
@@ -182,7 +235,7 @@
             this.LabelGenre.Location = new System.Drawing.Point(6, 107);
             this.LabelGenre.Name = "LabelGenre";
             this.LabelGenre.Size = new System.Drawing.Size(47, 13);
-            this.LabelGenre.TabIndex = 8;
+            this.LabelGenre.TabIndex = 0;
             this.LabelGenre.Text = "Genre(s)";
             // 
             // EditGenres
@@ -190,7 +243,7 @@
             this.EditGenres.Location = new System.Drawing.Point(65, 104);
             this.EditGenres.Name = "EditGenres";
             this.EditGenres.Size = new System.Drawing.Size(266, 20);
-            this.EditGenres.TabIndex = 7;
+            this.EditGenres.TabIndex = 4;
             this.toolTip1.SetToolTip(this.EditGenres, "Comma-separated list of genres");
             // 
             // LabelArtist
@@ -199,7 +252,7 @@
             this.LabelArtist.Location = new System.Drawing.Point(6, 78);
             this.LabelArtist.Name = "LabelArtist";
             this.LabelArtist.Size = new System.Drawing.Size(41, 13);
-            this.LabelArtist.TabIndex = 6;
+            this.LabelArtist.TabIndex = 0;
             this.LabelArtist.Text = "Artist(s)";
             // 
             // EditArtists
@@ -207,7 +260,7 @@
             this.EditArtists.Location = new System.Drawing.Point(65, 75);
             this.EditArtists.Name = "EditArtists";
             this.EditArtists.Size = new System.Drawing.Size(266, 20);
-            this.EditArtists.TabIndex = 5;
+            this.EditArtists.TabIndex = 3;
             this.toolTip1.SetToolTip(this.EditArtists, "Comma-separated list of artists");
             // 
             // LabelAlbum
@@ -216,7 +269,7 @@
             this.LabelAlbum.Location = new System.Drawing.Point(6, 50);
             this.LabelAlbum.Name = "LabelAlbum";
             this.LabelAlbum.Size = new System.Drawing.Size(36, 13);
-            this.LabelAlbum.TabIndex = 4;
+            this.LabelAlbum.TabIndex = 0;
             this.LabelAlbum.Text = "Album";
             // 
             // EditAlbum
@@ -224,7 +277,7 @@
             this.EditAlbum.Location = new System.Drawing.Point(65, 47);
             this.EditAlbum.Name = "EditAlbum";
             this.EditAlbum.Size = new System.Drawing.Size(266, 20);
-            this.EditAlbum.TabIndex = 3;
+            this.EditAlbum.TabIndex = 2;
             // 
             // LabelTitle
             // 
@@ -232,7 +285,7 @@
             this.LabelTitle.Location = new System.Drawing.Point(6, 22);
             this.LabelTitle.Name = "LabelTitle";
             this.LabelTitle.Size = new System.Drawing.Size(27, 13);
-            this.LabelTitle.TabIndex = 2;
+            this.LabelTitle.TabIndex = 0;
             this.LabelTitle.Text = "Title";
             // 
             // EditTitle
@@ -245,15 +298,16 @@
             // ListBoxInfo
             // 
             this.ListBoxInfo.FormattingEnabled = true;
-            this.ListBoxInfo.Location = new System.Drawing.Point(349, 16);
+            this.ListBoxInfo.Location = new System.Drawing.Point(349, 22);
             this.ListBoxInfo.Name = "ListBoxInfo";
-            this.ListBoxInfo.Size = new System.Drawing.Size(208, 108);
-            this.ListBoxInfo.TabIndex = 0;
+            this.ListBoxInfo.Size = new System.Drawing.Size(224, 173);
+            this.ListBoxInfo.TabIndex = 12;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fIleToolStripMenuItem});
+            this.fIleToolStripMenuItem,
+            this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(587, 29);
@@ -266,7 +320,9 @@
             this.openToolStripMenuItem,
             this.toolStripMenuItem1,
             this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
+            this.saveAsToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.quitToolStripMenuItem});
             this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
             this.fIleToolStripMenuItem.Text = "&File";
@@ -286,6 +342,7 @@
             // 
             // saveToolStripMenuItem
             // 
+            this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
@@ -301,18 +358,61 @@
             this.saveAsToolStripMenuItem.Text = "&Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(229, 6);
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
+            this.quitToolStripMenuItem.Text = "&Quit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyTagsToolStripMenuItem,
+            this.pasteTagsToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
+            this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // copyTagsToolStripMenuItem
+            // 
+            this.copyTagsToolStripMenuItem.Name = "copyTagsToolStripMenuItem";
+            this.copyTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyTagsToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.copyTagsToolStripMenuItem.Text = "Copy Tags";
+            this.copyTagsToolStripMenuItem.Click += new System.EventHandler(this.copyTagsToolStripMenuItem_Click);
+            // 
+            // pasteTagsToolStripMenuItem
+            // 
+            this.pasteTagsToolStripMenuItem.Name = "pasteTagsToolStripMenuItem";
+            this.pasteTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.pasteTagsToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.pasteTagsToolStripMenuItem.Text = "Paste Tags";
+            this.pasteTagsToolStripMenuItem.Click += new System.EventHandler(this.pasteTagsToolStripMenuItem_Click);
+            // 
             // toolTip1
             // 
             this.toolTip1.AutoPopDelay = 5000;
             this.toolTip1.InitialDelay = 350;
             this.toolTip1.ReshowDelay = 100;
             // 
+            // TimerMiMessage
+            // 
+            this.TimerMiMessage.Interval = 7000;
+            this.TimerMiMessage.Tick += new System.EventHandler(this.TimerMiMessage_Tick);
+            // 
             // MiTagger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(587, 310);
+            this.ClientSize = new System.Drawing.Size(587, 366);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LabelCredit);
             this.Controls.Add(this.LabelPath);
@@ -322,7 +422,7 @@
             this.MaximizeBox = false;
             this.Name = "MiTagger";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MiTagger 1.07";
+            this.Text = "MiTagger 1.09";
             this.Load += new System.EventHandler(this.MiTagger_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
@@ -352,7 +452,6 @@
         private System.Windows.Forms.TextBox EditArtists;
         private System.Windows.Forms.Label LabelAlbum;
         private System.Windows.Forms.TextBox EditAlbum;
-        private System.Windows.Forms.Label LabelTitle;
         private System.Windows.Forms.TextBox EditTitle;
         private System.Windows.Forms.ListBox ListBoxInfo;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -364,6 +463,17 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBoxClearPreExistingTags;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button ButtonSave;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyTagsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteTagsToolStripMenuItem;
+        private System.Windows.Forms.Timer TimerMiMessage;
+        private System.Windows.Forms.Label LabelComment;
+        private System.Windows.Forms.TextBox EditComment;
+        private System.Windows.Forms.Label LabelTitle;
+        private System.Windows.Forms.Button ButtonQuit;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
     }
 }
 

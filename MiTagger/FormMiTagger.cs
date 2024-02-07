@@ -16,8 +16,9 @@ namespace MiTagger
 {
     public partial class MiTagger : Form
     {
-        const int TOKENCOUNT = 7;
+        const int TOKENCOUNT = 8;
         const int MAXDROPFILES = 30;
+        const int MIMESSAGETIMEOUT = 10000; // 10 sec.
         string m_readPath = "";
         string m_writePath = "";
 
@@ -42,6 +43,7 @@ namespace MiTagger
                 if (System.IO.File.Exists(arguments[1]))
                     ReadTags(arguments[1]);
             }
+            TimerMiMessage.Interval = MIMESSAGETIMEOUT;
         }
         //---------------------------------------------------------------------------
         private void MiTagger_DragEnter(object sender, DragEventArgs e)
@@ -89,9 +91,48 @@ namespace MiTagger
             }
         }
         //---------------------------------------------------------------------------
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteTags(m_writePath, checkBoxClearPreExistingTags.Checked);
+            ButtonCopyTags_Click(null, null);
+        }
+        //---------------------------------------------------------------------------
+        private void ButtonCopyTags_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.Clear();
+                String sTags = GetTagsAsCommaSeparatedBase64String();
+                if ((sTags.Length > 0))
+                    Clipboard.SetText(sTags);
+                else
+                    MessageBox.Show("Unable to copy tags to clipboard!");
+            }
+            catch
+            {
+                MessageBox.Show("Unable to copy tags to clipboard!");
+            }
+        }
+        //---------------------------------------------------------------------------
+        private void pasteTagsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ButtonPasteTags_Click(null, null);
+        }
+        //---------------------------------------------------------------------------
+        private void ButtonPasteTags_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String sTags = Clipboard.GetText();
+                int retCode = SetTagsFromCommaSeparatedBase64String(sTags);
+                if (retCode == -1)
+                    MessageBox.Show("Select \"Copy Tags\" before you can \"Paste Tags\"!");
+                else if (retCode < 0)
+                    MessageBox.Show("Unable to retreive tags from clipboard!");
+            }
+            catch
+            {
+                MessageBox.Show("Unable to retreive tags from clipboard!");
+            }
         }
         //---------------------------------------------------------------------------
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -104,8 +145,28 @@ namespace MiTagger
                 saveFileDialog.OverwritePrompt = false;
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    WriteTags(saveFileDialog.FileName, checkBoxClearPreExistingTags.Checked);
+                    WriteTags(saveFileDialog.FileName);
             }
+        }
+        //---------------------------------------------------------------------------
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ButtonSave_Click(null, null);
+        }
+        //---------------------------------------------------------------------------
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            WriteTags(m_writePath);
+        }
+        //---------------------------------------------------------------------------
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ButtonClose_Click(null, null);
+        }
+        //---------------------------------------------------------------------------
+        private void ButtonClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
         //---------------------------------------------------------------------------
         private void ReadTags(String filePath)
@@ -121,7 +182,8 @@ namespace MiTagger
             }
             catch
             {
-                m_readPath = "";
+                MessageBox.Show("Unable to add tags for file: \"" + filePath + "\"");
+                return;
             }
 
             var fileInfo = new FileInfo(filePath);
@@ -145,12 +207,16 @@ namespace MiTagger
                 catch
                 {
                     MessageBox.Show($"Unsupported file: {filePath}");
-                    m_readPath = "";
                     return;
                 }
             }
 
             m_writePath = m_readPath;
+
+            if (!ButtonSave.Enabled)
+                ButtonSave.Enabled = true;
+            if (!saveToolStripMenuItem.Enabled)
+                saveToolStripMenuItem.Enabled = true;
 
             if (file.PossiblyCorrupt)
                 LabelPath.Text = "(POSSIBLY CORRUPT!) " + m_readPath;
@@ -161,6 +227,7 @@ namespace MiTagger
             EditGenres.Text = ArrayToCommaString(file.Tag.Genres);
             EditTitle.Text = file.Tag.Title;
             EditAlbum.Text = file.Tag.Album;
+            EditComment.Text = file.Tag.Comment;
             EditYear.Text = file.Tag.Year.ToString();
             EditTrack.Text = file.Tag.Track.ToString();
 
@@ -192,7 +259,7 @@ namespace MiTagger
             ListBoxInfo.Items.Add($"File Size:\t{fileInfo.Length}");
         }
         //---------------------------------------------------------------------------
-        private bool WriteTags(String filePath, bool bClearPreExistingTags)
+        private bool WriteTags(String filePath)
         {
             if (String.IsNullOrEmpty(filePath))
                 return false;
@@ -222,13 +289,13 @@ namespace MiTagger
                     }
                     else
                     {
-                        MessageBox.Show("Unable to create fileAbstraction for: " + fa.Name);
+                        MiMessage("Unable to create fileAbstraction for: " + fa.Name);
                         return false;
                     }
                 }
                 catch
                 {
-                    MessageBox.Show($"Unsupported file: {filePath}");
+                    MiMessage($"Unsupported file: {filePath}");
                     m_readPath = "";
                     return false;
                 }
@@ -238,8 +305,11 @@ namespace MiTagger
             string genres = ArrayToCommaString(file.Tag.Genres);
             string title = file.Tag.Title;
             string album = file.Tag.Album;
+            string comment = file.Tag.Comment;
             string year = file.Tag.Year.ToString();
             string track = file.Tag.Track.ToString();
+
+            bool bClearPreExistingTags = checkBoxClearPreExistingTags.Checked;
 
             // Clear pre-existing tags during "Save As"
             if (bClearPreExistingTags)
@@ -264,6 +334,11 @@ namespace MiTagger
             if (bClearPreExistingTags || album != EditAlbum.Text)
             {
                 file.Tag.Album = EditAlbum.Text;
+                tagsCount++;
+            }
+            if (bClearPreExistingTags || comment != EditComment.Text)
+            {
+                file.Tag.Comment = EditComment.Text;
                 tagsCount++;
             }
             if (bClearPreExistingTags || year != EditYear.Text)
@@ -303,19 +378,37 @@ namespace MiTagger
                     file.Save();
                     m_writePath = filePath;
                     LabelPath.Text = m_writePath;
-                    MessageBox.Show($"Wrote {tagsCount} changed tags to \"{m_writePath}\"!");
+                    MiMessage($"Wrote {tagsCount} changed tags to \"{m_writePath}\"");
                 }
                 catch
                 {
-                    MessageBox.Show($"Unable to write {tagsCount} tags to \"{m_writePath}\"!");
+                    MiMessage($"Unable to write {tagsCount} tags to \"{m_writePath}\"");
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("No changed tags to write!");
+                MiMessage("No changed tags to write!");
             }
+
+            // uncheck "Clear Pre-Existing Tags" checkbox - reasoning: this is something you only need to do once
+            // on the first Save/Save As for a particular song-file.
+            if (bClearPreExistingTags)
+                checkBoxClearPreExistingTags.Checked = false;
+
             return true;
+        }
+        //---------------------------------------------------------------------------
+        private void MiMessage(string sTxt)
+        {
+            LabelCredit.Text = sTxt;
+            TimerMiMessage.Enabled = true;
+        }
+        //---------------------------------------------------------------------------
+        private void TimerMiMessage_Tick(object sender, EventArgs e)
+        {
+            TimerMiMessage.Enabled = false;
+            LabelCredit.Text = "";
         }
         //---------------------------------------------------------------------------
         private void SetListBoxTabs(ListBox lst, IEnumerable<int> tabs)
@@ -331,40 +424,6 @@ namespace MiTagger
             foreach (int tab in tabs)
             {
                 offsets.Add(tab);
-            }
-        }
-        //---------------------------------------------------------------------------
-        private void ButtonCopyTags_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Clipboard.Clear();
-                String sTags = GetTagsAsCommaSeparatedBase64String();
-                if ((sTags.Length > 0))
-                    Clipboard.SetText(sTags);
-                else
-                    MessageBox.Show("Unable to copy tags to clipboard!");
-            }
-            catch
-            {
-                MessageBox.Show("Unable to copy tags to clipboard!");
-            }
-        }
-        //---------------------------------------------------------------------------
-        private void ButtonPasteTags_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                String sTags = Clipboard.GetText();
-                int retCode = SetTagsFromCommaSeparatedBase64String(sTags);
-                if (retCode == -1)
-                    MessageBox.Show("Select \"Copy Tags\" before you can \"Paste Tags\"!");
-                else if (retCode< 0)
-                    MessageBox.Show("Unable to retreive tags from clipboard!");
-            }
-            catch
-            {
-                MessageBox.Show("Unable to retreive tags from clipboard!");
             }
         }
         //---------------------------------------------------------------------------
@@ -416,6 +475,7 @@ namespace MiTagger
                 EditAlbum.Text = sl[4];
                 EditArtists.Text = sl[5];
                 EditTitle.Text = sl[6];
+                EditComment.Text = sl[7];
             }
             catch
             {
@@ -430,7 +490,8 @@ namespace MiTagger
 
             try
             {
-                sOut += Base64Encode(EditTitle.Text) + "," +
+                sOut += Base64Encode(EditComment.Text) + "," +
+                        Base64Encode(EditTitle.Text) + "," +
                         Base64Encode(EditArtists.Text) + "," +
                         Base64Encode(EditAlbum.Text) + "," +
                         Base64Encode(EditGenres.Text) + "," +
