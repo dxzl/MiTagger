@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TagLib;
 using System.Security.Policy;
+using System.Runtime.InteropServices.ComTypes;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using System.Xml.Linq;
 
 namespace MiTagger
 {
@@ -19,6 +25,8 @@ namespace MiTagger
         const int TOKENCOUNT = 8;
         const int MAXDROPFILES = 30;
         const int MIMESSAGETIMEOUT = 10000; // 10 sec.
+        const int CHECKCLIPBOARDTIMEOUT = 2000; // 2 sec.        
+        const string MITAGGERFORMAT = "MiTaggerFormat"; // custom clipboard format name
         string m_readPath = "";
         string m_writePath = "";
 
@@ -31,6 +39,7 @@ namespace MiTagger
         private void MiTagger_Load(object sender, EventArgs e)
         {
             this.AllowDrop = true;
+            this.ActiveControl = ButtonSave;
             int[] arr = {60, 90};
             SetListBoxTabs(ListBoxInfo, arr);
 
@@ -43,7 +52,14 @@ namespace MiTagger
                 if (System.IO.File.Exists(arguments[1]))
                     ReadTags(arguments[1]);
             }
-            TimerMiMessage.Interval = MIMESSAGETIMEOUT;
+
+            timerMiMessage.Interval = MIMESSAGETIMEOUT;
+
+            // enable paste button if clipboard has our tags from another instance
+            timerCheckClipboard_Tick(null, null);
+
+            timerCheckClipboard.Interval = CHECKCLIPBOARDTIMEOUT;
+            timerCheckClipboard.Enabled = true;
         }
         //---------------------------------------------------------------------------
         private void MiTagger_DragEnter(object sender, DragEventArgs e)
@@ -100,10 +116,19 @@ namespace MiTagger
         {
             try
             {
-                Clipboard.Clear();
                 String sTags = GetTagsAsCommaSeparatedBase64String();
-                if ((sTags.Length > 0))
-                    Clipboard.SetText(sTags);
+                if (!String.IsNullOrEmpty(sTags))
+                {
+                    try
+                    {
+                        Clipboard.SetData(MITAGGERFORMAT, sTags);
+                    }
+                    catch (Exception Ex)
+                    {
+                        MessageClipboardOpen(Ex);
+                        return;
+                    }
+                }
                 else
                     MessageBox.Show("Unable to copy tags to clipboard!");
             }
@@ -122,17 +147,46 @@ namespace MiTagger
         {
             try
             {
-                String sTags = Clipboard.GetText();
-                int retCode = SetTagsFromCommaSeparatedBase64String(sTags);
-                if (retCode == -1)
+                String sTags = "";
+
+                try
+                {
+                    sTags = Clipboard.GetData(MITAGGERFORMAT) as String;
+                }
+                catch (Exception Ex)
+                {
+                    MessageClipboardOpen(Ex);
+                    return;
+                }
+
+                if (!String.IsNullOrEmpty(sTags))
+                {
+                    int retCode = SetTagsFromCommaSeparatedBase64String(sTags);
+                    if (retCode < 0)
+                    {
+                        if (retCode == -1)
+                            MessageBox.Show("Select \"Copy Tags\" before you can \"Paste Tags\"!");
+                        else
+                            MessageBox.Show($"Unable to retreive tags from clipboard! (code={retCode})");
+                    }
+                }
+                else
                     MessageBox.Show("Select \"Copy Tags\" before you can \"Paste Tags\"!");
-                else if (retCode < 0)
-                    MessageBox.Show("Unable to retreive tags from clipboard!");
             }
             catch
             {
                 MessageBox.Show("Unable to retreive tags from clipboard!");
             }
+        }
+        //---------------------------------------------------------------------------
+        // we check this via a timer every 2 seconds...
+        private void timerCheckClipboard_Tick(object sender, EventArgs e)
+        {
+            bool bHasData = Clipboard.ContainsData(MITAGGERFORMAT);
+            if (!ButtonPasteTags.Enabled && bHasData)
+                ButtonPasteTags.Enabled = true;
+            else if (ButtonPasteTags.Enabled && !bHasData)
+                ButtonPasteTags.Enabled = false;
         }
         //---------------------------------------------------------------------------
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -402,12 +456,12 @@ namespace MiTagger
         private void MiMessage(string sTxt)
         {
             LabelCredit.Text = sTxt;
-            TimerMiMessage.Enabled = true;
+            timerMiMessage.Enabled = true;
         }
         //---------------------------------------------------------------------------
         private void TimerMiMessage_Tick(object sender, EventArgs e)
         {
-            TimerMiMessage.Enabled = false;
+            timerMiMessage.Enabled = false;
             LabelCredit.Text = "";
         }
         //---------------------------------------------------------------------------
@@ -503,6 +557,23 @@ namespace MiTagger
             return sOut;
         }
         //---------------------------------------------------------------------------
+        private void MessageClipboardOpen(Exception Ex)
+        {
+            // to make this work, in .csproj include in <PropertyGroup>... <LangVersion>latest</LangVersion>
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            static extern IntPtr GetOpenClipboardWindow();
+
+            [System.Runtime.InteropServices.DllImport("user32.dll")]
+            static extern int GetWindowText(int hWnd, StringBuilder text, int count);
+
+            IntPtr hwnd = GetOpenClipboardWindow();
+            StringBuilder sb = new StringBuilder(501);
+            GetWindowText(hwnd.ToInt32(), sb, 500);
+            String msg = Ex.Message +
+                "\n\nCan't open clipboard due to:\n\"" + sb.ToString() + "\"";
+            MessageBox.Show(msg);
+        }
+        //---------------------------------------------------------------------------
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -513,7 +584,6 @@ namespace MiTagger
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
-        //---------------------------------------------------------------------------
     }
 
     public class FileAbstraction : TagLib.File.IFileAbstraction
@@ -541,4 +611,5 @@ namespace MiTagger
             stream.Close();
         }
     }
+    //------------------------------------------------------------------------------
 }

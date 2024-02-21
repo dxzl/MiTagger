@@ -33,7 +33,7 @@
             this.LabelPath = new System.Windows.Forms.Label();
             this.LabelCredit = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ButtonQuit = new System.Windows.Forms.Button();
+            this.ButtonExit = new System.Windows.Forms.Button();
             this.LabelComment = new System.Windows.Forms.Label();
             this.EditComment = new System.Windows.Forms.TextBox();
             this.ButtonSave = new System.Windows.Forms.Button();
@@ -61,12 +61,13 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.TimerMiMessage = new System.Windows.Forms.Timer(this.components);
+            this.timerMiMessage = new System.Windows.Forms.Timer(this.components);
+            this.timerCheckClipboard = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +92,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.ButtonQuit);
+            this.groupBox1.Controls.Add(this.ButtonExit);
             this.groupBox1.Controls.Add(this.LabelComment);
             this.groupBox1.Controls.Add(this.EditComment);
             this.groupBox1.Controls.Add(this.ButtonSave);
@@ -118,15 +119,15 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
-            // ButtonQuit
+            // ButtonExit
             // 
-            this.ButtonQuit.Location = new System.Drawing.Point(482, 248);
-            this.ButtonQuit.Name = "ButtonQuit";
-            this.ButtonQuit.Size = new System.Drawing.Size(75, 23);
-            this.ButtonQuit.TabIndex = 11;
-            this.ButtonQuit.Text = "Quit";
-            this.ButtonQuit.UseVisualStyleBackColor = true;
-            this.ButtonQuit.Click += new System.EventHandler(this.ButtonClose_Click);
+            this.ButtonExit.Location = new System.Drawing.Point(482, 248);
+            this.ButtonExit.Name = "ButtonExit";
+            this.ButtonExit.Size = new System.Drawing.Size(75, 23);
+            this.ButtonExit.TabIndex = 11;
+            this.ButtonExit.Text = "Exit";
+            this.ButtonExit.UseVisualStyleBackColor = true;
+            this.ButtonExit.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // LabelComment
             // 
@@ -139,6 +140,7 @@
             // 
             // EditComment
             // 
+            this.EditComment.AcceptsReturn = true;
             this.EditComment.Location = new System.Drawing.Point(65, 136);
             this.EditComment.Multiline = true;
             this.EditComment.Name = "EditComment";
@@ -179,6 +181,7 @@
             // 
             // ButtonPasteTags
             // 
+            this.ButtonPasteTags.Enabled = false;
             this.ButtonPasteTags.Location = new System.Drawing.Point(482, 206);
             this.ButtonPasteTags.Name = "ButtonPasteTags";
             this.ButtonPasteTags.Size = new System.Drawing.Size(75, 23);
@@ -322,7 +325,7 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.quitToolStripMenuItem});
+            this.exitToolStripMenuItem});
             this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
             this.fIleToolStripMenuItem.Text = "&File";
@@ -363,13 +366,13 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(229, 6);
             // 
-            // quitToolStripMenuItem
+            // exitToolStripMenuItem
             // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
-            this.quitToolStripMenuItem.Text = "&Quit";
-            this.quitToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
+            this.exitToolStripMenuItem.Text = "&Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -383,16 +386,16 @@
             // copyTagsToolStripMenuItem
             // 
             this.copyTagsToolStripMenuItem.Name = "copyTagsToolStripMenuItem";
-            this.copyTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyTagsToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.copyTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.copyTagsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.copyTagsToolStripMenuItem.Text = "Copy Tags";
             this.copyTagsToolStripMenuItem.Click += new System.EventHandler(this.copyTagsToolStripMenuItem_Click);
             // 
             // pasteTagsToolStripMenuItem
             // 
             this.pasteTagsToolStripMenuItem.Name = "pasteTagsToolStripMenuItem";
-            this.pasteTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.pasteTagsToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.pasteTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.V)));
+            this.pasteTagsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.pasteTagsToolStripMenuItem.Text = "Paste Tags";
             this.pasteTagsToolStripMenuItem.Click += new System.EventHandler(this.pasteTagsToolStripMenuItem_Click);
             // 
@@ -402,10 +405,15 @@
             this.toolTip1.InitialDelay = 350;
             this.toolTip1.ReshowDelay = 100;
             // 
-            // TimerMiMessage
+            // timerMiMessage
             // 
-            this.TimerMiMessage.Interval = 7000;
-            this.TimerMiMessage.Tick += new System.EventHandler(this.TimerMiMessage_Tick);
+            this.timerMiMessage.Interval = 7000;
+            this.timerMiMessage.Tick += new System.EventHandler(this.TimerMiMessage_Tick);
+            // 
+            // timerCheckClipboard
+            // 
+            this.timerCheckClipboard.Interval = 2000;
+            this.timerCheckClipboard.Tick += new System.EventHandler(this.timerCheckClipboard_Tick);
             // 
             // MiTagger
             // 
@@ -422,7 +430,7 @@
             this.MaximizeBox = false;
             this.Name = "MiTagger";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MiTagger 1.09";
+            this.Text = "MiTagger 1.10";
             this.Load += new System.EventHandler(this.MiTagger_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
@@ -467,13 +475,14 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyTagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteTagsToolStripMenuItem;
-        private System.Windows.Forms.Timer TimerMiMessage;
+        private System.Windows.Forms.Timer timerMiMessage;
         private System.Windows.Forms.Label LabelComment;
         private System.Windows.Forms.TextBox EditComment;
         private System.Windows.Forms.Label LabelTitle;
-        private System.Windows.Forms.Button ButtonQuit;
+        private System.Windows.Forms.Button ButtonExit;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Timer timerCheckClipboard;
     }
 }
 

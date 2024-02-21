@@ -352,7 +352,7 @@
                 {
                 "Name" = "8:.NET Framework 4"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.0       "
+                "FrameworkVersion" = "8:v4.0        "
                 "AllowLaterVersions" = "11:TRUE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=155570"
                 }
@@ -446,7 +446,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.0.9.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MiTagger, Version=1.1.0.0, Culture=neutral, PublicKeyToken=f2f0d89b9539a9ee, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_12106D37C5014A82B295B9D8C96250D9"
@@ -1096,15 +1096,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MiTagger"
-        "ProductCode" = "8:{BF44FC68-1E7E-4423-B159-64F3C8D42599}"
-        "PackageCode" = "8:{A26866B6-619C-40F6-9229-21BEE51B8C53}"
+        "ProductCode" = "8:{6210FF85-8297-4017-81E6-65E26012B1D7}"
+        "PackageCode" = "8:{4FD5A818-DFD4-498D-95AD-0F0C0C187124}"
         "UpgradeCode" = "8:{57D7F139-6D7B-43FB-B6C3-4BFC24404154}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.09"
+        "ProductVersion" = "8:1.10"
         "Manufacturer" = "8:Discrete-Time Systems"
         "ARPHELPTELEPHONE" = "8:dxzl@live.com"
         "ARPHELPLINK" = "8:"
@@ -1248,7 +1248,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D7A59EADCAAE4809A0D8CFB2467E5BE5"
             {
             "Name" = "8:Uninstall MiTagger"
-            "Arguments" = "8:{BF44FC68-1E7E-4423-B159-64F3C8D42599}"
+            "Arguments" = "8:{6210FF85-8297-4017-81E6-65E26012B1D7}"
             "Description" = "8:Uninstall MiTagger"
             "ShowCmd" = "3:7"
             "IconIndex" = "3:0"
