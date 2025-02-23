@@ -28,418 +28,435 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiTagger));
-            this.LabelPath = new System.Windows.Forms.Label();
-            this.LabelCredit = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ButtonExit = new System.Windows.Forms.Button();
-            this.LabelComment = new System.Windows.Forms.Label();
-            this.EditComment = new System.Windows.Forms.TextBox();
-            this.ButtonSave = new System.Windows.Forms.Button();
-            this.checkBoxClearPreExistingTags = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ButtonPasteTags = new System.Windows.Forms.Button();
-            this.ButtonCopyTags = new System.Windows.Forms.Button();
-            this.LabelTrack = new System.Windows.Forms.Label();
-            this.EditTrack = new System.Windows.Forms.TextBox();
-            this.LabelYear = new System.Windows.Forms.Label();
-            this.EditYear = new System.Windows.Forms.TextBox();
-            this.LabelGenre = new System.Windows.Forms.Label();
-            this.EditGenres = new System.Windows.Forms.TextBox();
-            this.LabelArtist = new System.Windows.Forms.Label();
-            this.EditArtists = new System.Windows.Forms.TextBox();
-            this.LabelAlbum = new System.Windows.Forms.Label();
-            this.EditAlbum = new System.Windows.Forms.TextBox();
-            this.LabelTitle = new System.Windows.Forms.Label();
-            this.EditTitle = new System.Windows.Forms.TextBox();
-            this.ListBoxInfo = new System.Windows.Forms.ListBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.timerMiMessage = new System.Windows.Forms.Timer(this.components);
-            this.timerCheckClipboard = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            LabelPath = new System.Windows.Forms.Label();
+            LabelCredit = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            ButtonExit = new System.Windows.Forms.Button();
+            LabelComment = new System.Windows.Forms.Label();
+            EditComment = new System.Windows.Forms.TextBox();
+            ButtonSave = new System.Windows.Forms.Button();
+            checkBoxClearPreExistingTags = new System.Windows.Forms.CheckBox();
+            label1 = new System.Windows.Forms.Label();
+            ButtonPasteTags = new System.Windows.Forms.Button();
+            ButtonCopyTags = new System.Windows.Forms.Button();
+            LabelTrack = new System.Windows.Forms.Label();
+            EditTrack = new System.Windows.Forms.TextBox();
+            LabelYear = new System.Windows.Forms.Label();
+            EditYear = new System.Windows.Forms.TextBox();
+            LabelGenre = new System.Windows.Forms.Label();
+            EditGenres = new System.Windows.Forms.TextBox();
+            LabelArtist = new System.Windows.Forms.Label();
+            EditArtists = new System.Windows.Forms.TextBox();
+            LabelAlbum = new System.Windows.Forms.Label();
+            EditAlbum = new System.Windows.Forms.TextBox();
+            LabelTitle = new System.Windows.Forms.Label();
+            EditTitle = new System.Windows.Forms.TextBox();
+            ListBoxInfo = new System.Windows.Forms.ListBox();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            copyTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            pasteTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
+            timerMiMessage = new System.Windows.Forms.Timer(components);
+            timerCheckClipboard = new System.Windows.Forms.Timer(components);
+            groupBox1.SuspendLayout();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // LabelPath
             // 
-            this.LabelPath.AutoSize = true;
-            this.LabelPath.Location = new System.Drawing.Point(-1, 321);
-            this.LabelPath.Name = "LabelPath";
-            this.LabelPath.Size = new System.Drawing.Size(32, 13);
-            this.LabelPath.TabIndex = 1;
-            this.LabelPath.Text = "Path:";
+            LabelPath.AutoSize = true;
+            LabelPath.Location = new System.Drawing.Point(-1, 370);
+            LabelPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelPath.Name = "LabelPath";
+            LabelPath.Size = new System.Drawing.Size(34, 15);
+            LabelPath.TabIndex = 1;
+            LabelPath.Text = "Path:";
             // 
             // LabelCredit
             // 
-            this.LabelCredit.AutoSize = true;
-            this.LabelCredit.Location = new System.Drawing.Point(-1, 344);
-            this.LabelCredit.Name = "LabelCredit";
-            this.LabelCredit.Size = new System.Drawing.Size(37, 13);
-            this.LabelCredit.TabIndex = 2;
-            this.LabelCredit.Text = "Credit:";
+            LabelCredit.AutoSize = true;
+            LabelCredit.Location = new System.Drawing.Point(-1, 397);
+            LabelCredit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelCredit.Name = "LabelCredit";
+            LabelCredit.Size = new System.Drawing.Size(42, 15);
+            LabelCredit.TabIndex = 2;
+            LabelCredit.Text = "Credit:";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.ButtonExit);
-            this.groupBox1.Controls.Add(this.LabelComment);
-            this.groupBox1.Controls.Add(this.EditComment);
-            this.groupBox1.Controls.Add(this.ButtonSave);
-            this.groupBox1.Controls.Add(this.checkBoxClearPreExistingTags);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.ButtonPasteTags);
-            this.groupBox1.Controls.Add(this.ButtonCopyTags);
-            this.groupBox1.Controls.Add(this.LabelTrack);
-            this.groupBox1.Controls.Add(this.EditTrack);
-            this.groupBox1.Controls.Add(this.LabelYear);
-            this.groupBox1.Controls.Add(this.EditYear);
-            this.groupBox1.Controls.Add(this.LabelGenre);
-            this.groupBox1.Controls.Add(this.EditGenres);
-            this.groupBox1.Controls.Add(this.LabelArtist);
-            this.groupBox1.Controls.Add(this.EditArtists);
-            this.groupBox1.Controls.Add(this.LabelAlbum);
-            this.groupBox1.Controls.Add(this.EditAlbum);
-            this.groupBox1.Controls.Add(this.LabelTitle);
-            this.groupBox1.Controls.Add(this.EditTitle);
-            this.groupBox1.Controls.Add(this.ListBoxInfo);
-            this.groupBox1.Location = new System.Drawing.Point(2, 26);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(585, 292);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
+            groupBox1.Controls.Add(ButtonExit);
+            groupBox1.Controls.Add(LabelComment);
+            groupBox1.Controls.Add(EditComment);
+            groupBox1.Controls.Add(ButtonSave);
+            groupBox1.Controls.Add(checkBoxClearPreExistingTags);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(ButtonPasteTags);
+            groupBox1.Controls.Add(ButtonCopyTags);
+            groupBox1.Controls.Add(LabelTrack);
+            groupBox1.Controls.Add(EditTrack);
+            groupBox1.Controls.Add(LabelYear);
+            groupBox1.Controls.Add(EditYear);
+            groupBox1.Controls.Add(LabelGenre);
+            groupBox1.Controls.Add(EditGenres);
+            groupBox1.Controls.Add(LabelArtist);
+            groupBox1.Controls.Add(EditArtists);
+            groupBox1.Controls.Add(LabelAlbum);
+            groupBox1.Controls.Add(EditAlbum);
+            groupBox1.Controls.Add(LabelTitle);
+            groupBox1.Controls.Add(EditTitle);
+            groupBox1.Controls.Add(ListBoxInfo);
+            groupBox1.Location = new System.Drawing.Point(2, 30);
+            groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox1.Size = new System.Drawing.Size(682, 337);
+            groupBox1.TabIndex = 3;
+            groupBox1.TabStop = false;
             // 
             // ButtonExit
             // 
-            this.ButtonExit.Location = new System.Drawing.Point(482, 248);
-            this.ButtonExit.Name = "ButtonExit";
-            this.ButtonExit.Size = new System.Drawing.Size(75, 23);
-            this.ButtonExit.TabIndex = 11;
-            this.ButtonExit.Text = "Exit";
-            this.ButtonExit.UseVisualStyleBackColor = true;
-            this.ButtonExit.Click += new System.EventHandler(this.ButtonClose_Click);
+            ButtonExit.Location = new System.Drawing.Point(562, 286);
+            ButtonExit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ButtonExit.Name = "ButtonExit";
+            ButtonExit.Size = new System.Drawing.Size(88, 27);
+            ButtonExit.TabIndex = 11;
+            ButtonExit.Text = "Exit";
+            ButtonExit.UseVisualStyleBackColor = true;
+            ButtonExit.Click += ButtonClose_Click;
             // 
             // LabelComment
             // 
-            this.LabelComment.AutoSize = true;
-            this.LabelComment.Location = new System.Drawing.Point(6, 139);
-            this.LabelComment.Name = "LabelComment";
-            this.LabelComment.Size = new System.Drawing.Size(51, 13);
-            this.LabelComment.TabIndex = 0;
-            this.LabelComment.Text = "Comment";
+            LabelComment.AutoSize = true;
+            LabelComment.Location = new System.Drawing.Point(7, 160);
+            LabelComment.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelComment.Name = "LabelComment";
+            LabelComment.Size = new System.Drawing.Size(61, 15);
+            LabelComment.TabIndex = 0;
+            LabelComment.Text = "Comment";
             // 
             // EditComment
             // 
-            this.EditComment.AcceptsReturn = true;
-            this.EditComment.Location = new System.Drawing.Point(65, 136);
-            this.EditComment.Multiline = true;
-            this.EditComment.Name = "EditComment";
-            this.EditComment.Size = new System.Drawing.Size(266, 57);
-            this.EditComment.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.EditComment, "Comma-separated list of genres");
+            EditComment.AcceptsReturn = true;
+            EditComment.Location = new System.Drawing.Point(76, 157);
+            EditComment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditComment.Multiline = true;
+            EditComment.Name = "EditComment";
+            EditComment.Size = new System.Drawing.Size(310, 65);
+            EditComment.TabIndex = 5;
+            toolTip1.SetToolTip(EditComment, "Comma-separated list of genres");
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Enabled = false;
-            this.ButtonSave.Location = new System.Drawing.Point(387, 248);
-            this.ButtonSave.Name = "ButtonSave";
-            this.ButtonSave.Size = new System.Drawing.Size(75, 23);
-            this.ButtonSave.TabIndex = 10;
-            this.ButtonSave.Text = "Save";
-            this.ButtonSave.UseVisualStyleBackColor = true;
-            this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
+            ButtonSave.Enabled = false;
+            ButtonSave.Location = new System.Drawing.Point(451, 286);
+            ButtonSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ButtonSave.Name = "ButtonSave";
+            ButtonSave.Size = new System.Drawing.Size(88, 27);
+            ButtonSave.TabIndex = 10;
+            ButtonSave.Text = "Save";
+            ButtonSave.UseVisualStyleBackColor = true;
+            ButtonSave.Click += ButtonSave_Click;
             // 
             // checkBoxClearPreExistingTags
             // 
-            this.checkBoxClearPreExistingTags.AutoSize = true;
-            this.checkBoxClearPreExistingTags.Location = new System.Drawing.Point(54, 248);
-            this.checkBoxClearPreExistingTags.Name = "checkBoxClearPreExistingTags";
-            this.checkBoxClearPreExistingTags.Size = new System.Drawing.Size(227, 17);
-            this.checkBoxClearPreExistingTags.TabIndex = 17;
-            this.checkBoxClearPreExistingTags.Text = "Clear pre-existing tags on Save or Save As";
-            this.toolTip1.SetToolTip(this.checkBoxClearPreExistingTags, "Check this to erase other tags that are not displayed by MiTagger");
-            this.checkBoxClearPreExistingTags.UseVisualStyleBackColor = true;
+            checkBoxClearPreExistingTags.AutoSize = true;
+            checkBoxClearPreExistingTags.Location = new System.Drawing.Point(63, 286);
+            checkBoxClearPreExistingTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBoxClearPreExistingTags.Name = "checkBoxClearPreExistingTags";
+            checkBoxClearPreExistingTags.Size = new System.Drawing.Size(244, 19);
+            checkBoxClearPreExistingTags.TabIndex = 17;
+            checkBoxClearPreExistingTags.Text = "Clear pre-existing tags on Save or Save As";
+            toolTip1.SetToolTip(checkBoxClearPreExistingTags, "Check this to erase other tags that are not displayed by MiTagger");
+            checkBoxClearPreExistingTags.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-3, 276);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(370, 13);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "*Tip: You can drag-drop multiple song files onto MiTagger to open all of them!";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(-4, 318);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(422, 15);
+            label1.TabIndex = 16;
+            label1.Text = "*Tip: You can drag-drop multiple song files onto MiTagger to open all of them!";
             // 
             // ButtonPasteTags
             // 
-            this.ButtonPasteTags.Enabled = false;
-            this.ButtonPasteTags.Location = new System.Drawing.Point(482, 206);
-            this.ButtonPasteTags.Name = "ButtonPasteTags";
-            this.ButtonPasteTags.Size = new System.Drawing.Size(75, 23);
-            this.ButtonPasteTags.TabIndex = 9;
-            this.ButtonPasteTags.Text = "Paste Tags";
-            this.ButtonPasteTags.UseVisualStyleBackColor = true;
-            this.ButtonPasteTags.Click += new System.EventHandler(this.ButtonPasteTags_Click);
+            ButtonPasteTags.Enabled = false;
+            ButtonPasteTags.Location = new System.Drawing.Point(562, 238);
+            ButtonPasteTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ButtonPasteTags.Name = "ButtonPasteTags";
+            ButtonPasteTags.Size = new System.Drawing.Size(88, 27);
+            ButtonPasteTags.TabIndex = 9;
+            ButtonPasteTags.Text = "Paste Tags";
+            ButtonPasteTags.UseVisualStyleBackColor = true;
+            ButtonPasteTags.Click += ButtonPasteTags_Click;
             // 
             // ButtonCopyTags
             // 
-            this.ButtonCopyTags.Location = new System.Drawing.Point(387, 206);
-            this.ButtonCopyTags.Name = "ButtonCopyTags";
-            this.ButtonCopyTags.Size = new System.Drawing.Size(75, 23);
-            this.ButtonCopyTags.TabIndex = 8;
-            this.ButtonCopyTags.Text = "Copy Tags";
-            this.ButtonCopyTags.UseVisualStyleBackColor = true;
-            this.ButtonCopyTags.Click += new System.EventHandler(this.ButtonCopyTags_Click);
+            ButtonCopyTags.Location = new System.Drawing.Point(451, 238);
+            ButtonCopyTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ButtonCopyTags.Name = "ButtonCopyTags";
+            ButtonCopyTags.Size = new System.Drawing.Size(88, 27);
+            ButtonCopyTags.TabIndex = 8;
+            ButtonCopyTags.Text = "Copy Tags";
+            ButtonCopyTags.UseVisualStyleBackColor = true;
+            ButtonCopyTags.Click += ButtonCopyTags_Click;
             // 
             // LabelTrack
             // 
-            this.LabelTrack.AutoSize = true;
-            this.LabelTrack.Location = new System.Drawing.Point(154, 206);
-            this.LabelTrack.Name = "LabelTrack";
-            this.LabelTrack.Size = new System.Drawing.Size(35, 13);
-            this.LabelTrack.TabIndex = 0;
-            this.LabelTrack.Text = "Track";
+            LabelTrack.AutoSize = true;
+            LabelTrack.Location = new System.Drawing.Point(180, 238);
+            LabelTrack.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelTrack.Name = "LabelTrack";
+            LabelTrack.Size = new System.Drawing.Size(35, 15);
+            LabelTrack.TabIndex = 0;
+            LabelTrack.Text = "Track";
             // 
             // EditTrack
             // 
-            this.EditTrack.Location = new System.Drawing.Point(195, 203);
-            this.EditTrack.Name = "EditTrack";
-            this.EditTrack.Size = new System.Drawing.Size(72, 20);
-            this.EditTrack.TabIndex = 7;
+            EditTrack.Location = new System.Drawing.Point(227, 234);
+            EditTrack.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditTrack.Name = "EditTrack";
+            EditTrack.Size = new System.Drawing.Size(83, 23);
+            EditTrack.TabIndex = 7;
             // 
             // LabelYear
             // 
-            this.LabelYear.AutoSize = true;
-            this.LabelYear.Location = new System.Drawing.Point(18, 206);
-            this.LabelYear.Name = "LabelYear";
-            this.LabelYear.Size = new System.Drawing.Size(29, 13);
-            this.LabelYear.TabIndex = 0;
-            this.LabelYear.Text = "Year";
+            LabelYear.AutoSize = true;
+            LabelYear.Location = new System.Drawing.Point(21, 238);
+            LabelYear.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelYear.Name = "LabelYear";
+            LabelYear.Size = new System.Drawing.Size(29, 15);
+            LabelYear.TabIndex = 0;
+            LabelYear.Text = "Year";
             // 
             // EditYear
             // 
-            this.EditYear.Location = new System.Drawing.Point(65, 203);
-            this.EditYear.Name = "EditYear";
-            this.EditYear.Size = new System.Drawing.Size(72, 20);
-            this.EditYear.TabIndex = 6;
+            EditYear.Location = new System.Drawing.Point(76, 234);
+            EditYear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditYear.Name = "EditYear";
+            EditYear.Size = new System.Drawing.Size(83, 23);
+            EditYear.TabIndex = 6;
             // 
             // LabelGenre
             // 
-            this.LabelGenre.AutoSize = true;
-            this.LabelGenre.Location = new System.Drawing.Point(6, 107);
-            this.LabelGenre.Name = "LabelGenre";
-            this.LabelGenre.Size = new System.Drawing.Size(47, 13);
-            this.LabelGenre.TabIndex = 0;
-            this.LabelGenre.Text = "Genre(s)";
+            LabelGenre.AutoSize = true;
+            LabelGenre.Location = new System.Drawing.Point(7, 123);
+            LabelGenre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelGenre.Name = "LabelGenre";
+            LabelGenre.Size = new System.Drawing.Size(51, 15);
+            LabelGenre.TabIndex = 0;
+            LabelGenre.Text = "Genre(s)";
             // 
             // EditGenres
             // 
-            this.EditGenres.Location = new System.Drawing.Point(65, 104);
-            this.EditGenres.Name = "EditGenres";
-            this.EditGenres.Size = new System.Drawing.Size(266, 20);
-            this.EditGenres.TabIndex = 4;
-            this.toolTip1.SetToolTip(this.EditGenres, "Comma-separated list of genres");
+            EditGenres.Location = new System.Drawing.Point(76, 120);
+            EditGenres.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditGenres.Name = "EditGenres";
+            EditGenres.Size = new System.Drawing.Size(310, 23);
+            EditGenres.TabIndex = 4;
+            toolTip1.SetToolTip(EditGenres, "Comma-separated list of genres");
             // 
             // LabelArtist
             // 
-            this.LabelArtist.AutoSize = true;
-            this.LabelArtist.Location = new System.Drawing.Point(6, 78);
-            this.LabelArtist.Name = "LabelArtist";
-            this.LabelArtist.Size = new System.Drawing.Size(41, 13);
-            this.LabelArtist.TabIndex = 0;
-            this.LabelArtist.Text = "Artist(s)";
+            LabelArtist.AutoSize = true;
+            LabelArtist.Location = new System.Drawing.Point(7, 90);
+            LabelArtist.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelArtist.Name = "LabelArtist";
+            LabelArtist.Size = new System.Drawing.Size(48, 15);
+            LabelArtist.TabIndex = 0;
+            LabelArtist.Text = "Artist(s)";
             // 
             // EditArtists
             // 
-            this.EditArtists.Location = new System.Drawing.Point(65, 75);
-            this.EditArtists.Name = "EditArtists";
-            this.EditArtists.Size = new System.Drawing.Size(266, 20);
-            this.EditArtists.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.EditArtists, "Comma-separated list of artists");
+            EditArtists.Location = new System.Drawing.Point(76, 87);
+            EditArtists.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditArtists.Name = "EditArtists";
+            EditArtists.Size = new System.Drawing.Size(310, 23);
+            EditArtists.TabIndex = 3;
+            toolTip1.SetToolTip(EditArtists, "Comma-separated list of artists");
             // 
             // LabelAlbum
             // 
-            this.LabelAlbum.AutoSize = true;
-            this.LabelAlbum.Location = new System.Drawing.Point(6, 50);
-            this.LabelAlbum.Name = "LabelAlbum";
-            this.LabelAlbum.Size = new System.Drawing.Size(36, 13);
-            this.LabelAlbum.TabIndex = 0;
-            this.LabelAlbum.Text = "Album";
+            LabelAlbum.AutoSize = true;
+            LabelAlbum.Location = new System.Drawing.Point(7, 58);
+            LabelAlbum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelAlbum.Name = "LabelAlbum";
+            LabelAlbum.Size = new System.Drawing.Size(43, 15);
+            LabelAlbum.TabIndex = 0;
+            LabelAlbum.Text = "Album";
             // 
             // EditAlbum
             // 
-            this.EditAlbum.Location = new System.Drawing.Point(65, 47);
-            this.EditAlbum.Name = "EditAlbum";
-            this.EditAlbum.Size = new System.Drawing.Size(266, 20);
-            this.EditAlbum.TabIndex = 2;
+            EditAlbum.Location = new System.Drawing.Point(76, 54);
+            EditAlbum.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditAlbum.Name = "EditAlbum";
+            EditAlbum.Size = new System.Drawing.Size(310, 23);
+            EditAlbum.TabIndex = 2;
             // 
             // LabelTitle
             // 
-            this.LabelTitle.AutoSize = true;
-            this.LabelTitle.Location = new System.Drawing.Point(6, 22);
-            this.LabelTitle.Name = "LabelTitle";
-            this.LabelTitle.Size = new System.Drawing.Size(27, 13);
-            this.LabelTitle.TabIndex = 0;
-            this.LabelTitle.Text = "Title";
+            LabelTitle.AutoSize = true;
+            LabelTitle.Location = new System.Drawing.Point(7, 25);
+            LabelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelTitle.Name = "LabelTitle";
+            LabelTitle.Size = new System.Drawing.Size(30, 15);
+            LabelTitle.TabIndex = 0;
+            LabelTitle.Text = "Title";
             // 
             // EditTitle
             // 
-            this.EditTitle.Location = new System.Drawing.Point(65, 19);
-            this.EditTitle.Name = "EditTitle";
-            this.EditTitle.Size = new System.Drawing.Size(266, 20);
-            this.EditTitle.TabIndex = 1;
+            EditTitle.Location = new System.Drawing.Point(76, 22);
+            EditTitle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            EditTitle.Name = "EditTitle";
+            EditTitle.Size = new System.Drawing.Size(310, 23);
+            EditTitle.TabIndex = 1;
             // 
             // ListBoxInfo
             // 
-            this.ListBoxInfo.FormattingEnabled = true;
-            this.ListBoxInfo.Location = new System.Drawing.Point(349, 22);
-            this.ListBoxInfo.Name = "ListBoxInfo";
-            this.ListBoxInfo.Size = new System.Drawing.Size(224, 173);
-            this.ListBoxInfo.TabIndex = 12;
+            ListBoxInfo.FormattingEnabled = true;
+            ListBoxInfo.ItemHeight = 15;
+            ListBoxInfo.Location = new System.Drawing.Point(407, 25);
+            ListBoxInfo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ListBoxInfo.Name = "ListBoxInfo";
+            ListBoxInfo.Size = new System.Drawing.Size(261, 199);
+            ListBoxInfo.TabIndex = 12;
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fIleToolStripMenuItem,
-            this.editToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(587, 29);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fIleToolStripMenuItem, editToolStripMenuItem });
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            menuStrip1.Size = new System.Drawing.Size(685, 24);
+            menuStrip1.TabIndex = 4;
+            menuStrip1.Text = "menuStrip1";
             // 
             // fIleToolStripMenuItem
             // 
-            this.fIleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.exitToolStripMenuItem});
-            this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
-            this.fIleToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
-            this.fIleToolStripMenuItem.Text = "&File";
+            fIleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openToolStripMenuItem, toolStripMenuItem1, saveToolStripMenuItem, saveAsToolStripMenuItem, toolStripMenuItem2, exitToolStripMenuItem });
+            fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
+            fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            fIleToolStripMenuItem.Text = "&File";
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
-            this.openToolStripMenuItem.Text = "&Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
+            openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            openToolStripMenuItem.Text = "&Open";
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(229, 6);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new System.Drawing.Size(183, 6);
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Enabled = false;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
-            this.saveToolStripMenuItem.Text = "&Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            saveToolStripMenuItem.Enabled = false;
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
+            saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            saveToolStripMenuItem.Text = "&Save";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
-            this.saveAsToolStripMenuItem.Text = "&Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            saveAsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.S;
+            saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            saveAsToolStripMenuItem.Text = "&Save As";
+            saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(229, 6);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new System.Drawing.Size(183, 6);
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(232, 26);
-            this.exitToolStripMenuItem.Text = "&Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q;
+            exitToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            exitToolStripMenuItem.Text = "&Exit";
+            exitToolStripMenuItem.Click += closeToolStripMenuItem_Click;
             // 
             // editToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyTagsToolStripMenuItem,
-            this.pasteTagsToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
-            this.editToolStripMenuItem.Text = "&Edit";
+            editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { copyTagsToolStripMenuItem, pasteTagsToolStripMenuItem });
+            editToolStripMenuItem.Name = "editToolStripMenuItem";
+            editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            editToolStripMenuItem.Text = "&Edit";
             // 
             // copyTagsToolStripMenuItem
             // 
-            this.copyTagsToolStripMenuItem.Name = "copyTagsToolStripMenuItem";
-            this.copyTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.copyTagsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
-            this.copyTagsToolStripMenuItem.Text = "Copy Tags";
-            this.copyTagsToolStripMenuItem.Click += new System.EventHandler(this.copyTagsToolStripMenuItem_Click);
+            copyTagsToolStripMenuItem.Name = "copyTagsToolStripMenuItem";
+            copyTagsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C;
+            copyTagsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            copyTagsToolStripMenuItem.Text = "Copy Tags";
+            copyTagsToolStripMenuItem.Click += copyTagsToolStripMenuItem_Click;
             // 
             // pasteTagsToolStripMenuItem
             // 
-            this.pasteTagsToolStripMenuItem.Name = "pasteTagsToolStripMenuItem";
-            this.pasteTagsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.V)));
-            this.pasteTagsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
-            this.pasteTagsToolStripMenuItem.Text = "Paste Tags";
-            this.pasteTagsToolStripMenuItem.Click += new System.EventHandler(this.pasteTagsToolStripMenuItem_Click);
+            pasteTagsToolStripMenuItem.Name = "pasteTagsToolStripMenuItem";
+            pasteTagsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.V;
+            pasteTagsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            pasteTagsToolStripMenuItem.Text = "Paste Tags";
+            pasteTagsToolStripMenuItem.Click += pasteTagsToolStripMenuItem_Click;
             // 
             // toolTip1
             // 
-            this.toolTip1.AutoPopDelay = 5000;
-            this.toolTip1.InitialDelay = 350;
-            this.toolTip1.ReshowDelay = 100;
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 350;
+            toolTip1.ReshowDelay = 100;
             // 
             // timerMiMessage
             // 
-            this.timerMiMessage.Interval = 7000;
-            this.timerMiMessage.Tick += new System.EventHandler(this.TimerMiMessage_Tick);
+            timerMiMessage.Interval = 7000;
+            timerMiMessage.Tick += TimerMiMessage_Tick;
             // 
             // timerCheckClipboard
             // 
-            this.timerCheckClipboard.Interval = 2000;
-            this.timerCheckClipboard.Tick += new System.EventHandler(this.timerCheckClipboard_Tick);
+            timerCheckClipboard.Interval = 2000;
+            timerCheckClipboard.Tick += timerCheckClipboard_Tick;
             // 
             // MiTagger
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(587, 366);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.LabelCredit);
-            this.Controls.Add(this.LabelPath);
-            this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "MiTagger";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MiTagger 1.10";
-            this.Load += new System.EventHandler(this.MiTagger_Load);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MiTagger_DragEnter);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(685, 422);
+            Controls.Add(groupBox1);
+            Controls.Add(LabelCredit);
+            Controls.Add(LabelPath);
+            Controls.Add(menuStrip1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            Name = "MiTagger";
+            SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            Text = "MiTagger 1.11";
+            Load += MiTagger_Load;
+            DragDrop += MiTagger_DragDrop;
+            DragEnter += MiTagger_DragEnter;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
