@@ -447,7 +447,7 @@
             MaximizeBox = false;
             Name = "MiTagger";
             SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            Text = "MiTagger 1.11";
+            Text = "MiTagger 1.12";
             Load += MiTagger_Load;
             DragDrop += MiTagger_DragDrop;
             DragEnter += MiTagger_DragEnter;

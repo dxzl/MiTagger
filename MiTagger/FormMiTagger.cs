@@ -88,11 +88,13 @@ namespace MiTagger
         //---------------------------------------------------------------------------
         private void SpawnOurself(String filePath)
         {
+//            MessageBox.Show("spawn=\"" + filePath + "\"");
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
-            startInfo.UseShellExecute = false;
+            startInfo.UseShellExecute = true;
             startInfo.FileName = Application.ExecutablePath;
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+//            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.WindowStyle = ProcessWindowStyle.Normal;
             startInfo.Arguments = "\"" + filePath + "\"";
             try { Process.Start(startInfo); }
             catch {}

@@ -184,7 +184,7 @@
                 {
                 "Name" = "8:.NET Framework 4"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.0          "
+                "FrameworkVersion" = "8:v4.0           "
                 "AllowLaterVersions" = "11:TRUE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=155570"
                 }
@@ -552,15 +552,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MiTagger"
-        "ProductCode" = "8:{0408A984-BA62-4C96-AA54-E03D100E5193}"
-        "PackageCode" = "8:{9E09E0C2-8547-4547-9E75-93BFA3AEB27F}"
+        "ProductCode" = "8:{CA6035B9-B780-4A9A-9DC1-AF186BC40AEA}"
+        "PackageCode" = "8:{5BBA415C-F188-43CD-B1B7-92860B638124}"
         "UpgradeCode" = "8:{57D7F139-6D7B-43FB-B6C3-4BFC24404154}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.11"
+        "ProductVersion" = "8:1.12"
         "Manufacturer" = "8:Discrete-Time Systems"
         "ARPHELPTELEPHONE" = "8:dxzl@live.com"
         "ARPHELPLINK" = "8:"
